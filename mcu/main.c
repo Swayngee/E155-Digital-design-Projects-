@@ -4,7 +4,8 @@
 //9/28/25
 
 // Pitch in Hz, duration in ms
-#include "STM32L432KC_TIM.h"
+#include "STM32L432KC_TIM16.h"
+#include "STM32L432KC_TIM6.h"
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_FLASH.h"
@@ -122,8 +123,8 @@ const int notes[][2] = {
 
 
 
-int freq;
-int dur;
+uint32_t freq;
+uint32_t dur;
 
 int main(void) {
 // Configure flash to add waitstates to avoid timing errors
@@ -131,18 +132,24 @@ configureFlash();
 
 // Setup the PLL and switch clock source to the PLL
 configureClock();
-
-// Turn on clock to GPIOB
+configtim6();
 RCC->AHB2ENR |= (1 << 1);
-GPIO->AFRL &= ~(0xF << (24));  
-GPIO->AFRL |=  (14 << (24));    
+RCC->APB2ENR |= (1 << 17);
+
+GPIO->AFRL &= ~(0xF << 24);    
+GPIO->AFRL |= (14 << 24);
+
+pinMode(6, GPIO_ALT);
 
 for (int i = 0; notes[i][1] != 0; i++) {
   freq = notes[i][0];
   dur = notes[i][1];
-if (dur != 0) {
+if (dur == 0) {
+  TIM16 -> CCER &= ~1;
+  delay(dur);
+  } else {
   PWM(TIM16, freq);
-  delay(TIM15, dur);
+  delay(dur);
 
 }
 }
