@@ -13,6 +13,7 @@
 #define TIM16_BASE (0x40014400UL)
 
 #define TIM15_BASE (0x40014000UL)
+
 // Strct registers for timers, I wrote them all out for future reference
 typedef struct {
     volatile uint32_t CR1;   // timer Offset 0x00 
@@ -47,6 +48,7 @@ typedef struct {
 #define TIM15 ((TIM *) TIM15_BASE)
 #define TIM16 ((TIM *) TIM16_BASE)
 
-void PWM(TIM *tim, uint32_t freq);
+void config16(void);
+void PWM(int freq);
 
 #endif
