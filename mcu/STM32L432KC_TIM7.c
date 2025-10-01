@@ -1,6 +1,6 @@
 //Drake Gonzales
 //drgonzales@g.hmc.edu
-//This Module is my c file for the timers used for lab4
+//This Module is my c file for the timer7 used for lab4
 //9/28/25
 
 #include "STM32L432KC_TIM7.h"
