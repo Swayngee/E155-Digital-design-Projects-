@@ -212,10 +212,12 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="equations">Equations</h3>
 <p>To be able to control the timer’s correctly, the design implemented sets internal prescalars which slows down the clock to be able to control the output minimum and maximum, frequency and duration.</p>
 <p>To perform this function, the design must first set the correct internal oscillator on, in this case it was the MSI clk. This clock oscillates at 4 MHz.</p>
-<p>To step down this clk for the wide range of frequency’s (0 to ~1500 Hz) and duration (0 to 500 ms) for this lab a correct prescalar must be set for each timer.<br>
-#### TIM7 - delay timer</p>
+<p>To step down this clk for the wide range of frequency’s (0 to ~1500 Hz) and duration (0 to 500 ms) for this lab a correct prescalar must be set for each timer.</p>
+<section id="tim7---delay-timer" class="level4">
+<h4 class="anchored" data-anchor-id="tim7---delay-timer">TIM7 - delay timer</h4>
 <p>For timer7 (a basic timer), a prescaler of 39 was chosen to stepdown the MSI clk to 100 kHz. To calculate the minimum duration we take the clock rate that we dropped to 100kHz, and invert it to find the time. 1/100Khz = 10 µs per count. We then use the equation 100*ms - 1; to determine our ARR value.</p>
 <p>Minimum delay - The input frequency must be above 1 to prevent the underflow of bits. (100 * (0)-1) = -1. Maximum delay - The input frequency must be below the max value from our ARR * 100, which is m &lt;= 655.36ms.</p>
+</section>
 <section id="tim16---pwm-timer" class="level4">
 <h4 class="anchored" data-anchor-id="tim16---pwm-timer">TIM16 - PWM timer</h4>
 <p>For timer16 (a General-Purpose timer), a prescalar value of 3 was chosen to stepdown the PLL input clock to 1Mhz. Maximum freq - 1Mhz, which is out input frequency, although this value will unlikely sound. Minimum freq - Fmin = 1,000,000/ 65536 (the highest ARR) = 15.258789&nbsp;Hz</p>
