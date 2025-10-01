@@ -3,16 +3,17 @@
 // This Moduleis my header file for the timers used for lab4
 // 9/28/25
 
-#ifndef STM32L4_TIM6_H
-#define STM32L4_TIM6_H
+#ifndef STM32L4_TIM7_H
+#define STM32L4_TIM7_H
 
 #include <stdint.h>
 
-// DEF TIM6
+// DEF TIM7, TIM6 also has the same regs
 
+#define TIM7_BASE (0x40001400UL)
 #define TIM6_BASE (0x40001000UL)
 
-// Strct registers for timers, I wrote them all out for future reference
+// Strct registers for timers
 typedef struct {
     volatile uint32_t CR1;   // timer Offset 0x00 
     volatile uint32_t CR2;  // timer Offset 0x04
@@ -26,12 +27,12 @@ typedef struct {
     volatile uint32_t CNT;   // timer Offset 0x24
     volatile uint32_t PSC;   // timer Offset 0x28
     volatile uint32_t ARR;   // timer Offset 0x2C
-} Tim6;
+} Tim7;
 
 // Pointers to TIM-sized chunks of memory for each peripheral
-#define TIM6 ((Tim6 *) TIM6_BASE)
+#define TIM7 ((Tim7 *) TIM7_BASE)
 
-void configtim6(void);
+void configtim7(void);
 void delay(uint32_t ms);
 
 #endif
