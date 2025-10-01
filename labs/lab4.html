@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-12-01">
+<meta name="dcterms.date" content="2025-09-30">
 
 <title>lab4 – E155 portfolio</title>
 <style>
@@ -155,6 +155,17 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#lab-4-digital-audio" id="toc-lab-4-digital-audio" class="nav-link active" data-scroll-target="#lab-4-digital-audio">Lab 4 Digital Audio</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
+  <ul class="collapse">
+  <li><a href="#equations" id="toc-equations" class="nav-link" data-scroll-target="#equations">Equations</a></li>
+  </ul></li>
+  <li><a href="#tim16---pwm-timer" id="toc-tim16---pwm-timer" class="nav-link" data-scroll-target="#tim16---pwm-timer">TIM16 - PWM timer</a>
+  <ul class="collapse">
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions">Suggestions</a></li>
+  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">Ai prototype</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -176,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 1, 2025</p>
+      <p class="date">September 30, 2025</p>
     </div>
   </div>
   
@@ -193,8 +204,79 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this lab, a design was made to use a microcontroller, its respective timers, clk and GPIO pins, to play music. Two timers were incorporated into this design. TIM16 was used as a PWM source to create an output square wave, and TIM7 was used as a delay timer. The clk used for the TIM16 design was the PLL, which was initialized by the MSI (4MHZ). For TIM7, the MSI(4Hz) clk was used in a direct connection.</p>
+<p>The design was developed using C on SEGGER, and implemented on an STM32L432KC Microcontroller.</p>
+</section>
+<section id="technical-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
+<p>The source code for this lab can be found in this <a href="https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab4">GitHub repo</a>.</p>
+<p>The documentation for the STM32L432KC manual <a href="https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf">Github link</a>.</p>
+<section id="equations" class="level3">
+<h3 class="anchored" data-anchor-id="equations">Equations</h3>
+<p>To be able to control the timer’s correctly, the design implemented sets internal prescalars which slows down the clock to be able to control the output minimum and maximum, frequency and duration.</p>
+<p>To perform this function, the design must first set the correct internal oscillator on, in this case it was the MSI clk. This clock oscillates at 4 MHz.</p>
+<p>To step down this clk for the wide range of frequency’s (0 to ~1500 Hz) and duration (0 to 500 ms) for this lab a correct prescalar must be set for each timer.<br>
+# TIM7 - delay timer</p>
+<p>For timer7 (a basic timer), a prescaler of 39 was chosen to stepdown the MSI clk to 100 kHz. To calculate the minimum duration we take the clock rate that we dropped to 100kHz, and invert it to find the time. 1/100Khz = 10 µs per count. We then use the equation 100*ms - 1; to determine our ARR value.</p>
+<p>Minimum delay - The input frequency must be above 1 to prevent the underflow of bits. (100 * (0)-1) = -1. Maximum delay - The input frequency must be below the max value from our ARR * 100, which is m &lt;= 655.36ms.</p>
+</section>
+</section>
+<section id="tim16---pwm-timer" class="level1">
+<h1>TIM16 - PWM timer</h1>
+<p>For timer16 (a General-Purpose timer), a prescalar value of 3 was chosen to stepdown the PLL input clock to 1Mhz. Maximum freq - 1Mhz, which is out input frequency, although this value will unlikely sound. Minimum freq - Fmin = 1,000,000/ 65536 (the highest ARR) = 15.258789&nbsp;Hz</p>
+<hr>
+<p>That being said, we can test if we are getting the correct frequency/ delay, by plugging them into the aforementioned equations.</p>
+<p>If we do a ms of 1. ARR = 100<em>ms-1 = 99. (100 ticks </em>10 µs = 1ms)</p>
+<p>For frequency we can test 20hz with (freqclk / ((TIM16 -&gt; PSC +1) * freq)) - 1. ((1,000,000 / 4)*20) -1 = 49,999. Which is 1 µs tick per 50 ms period. f = 1/T -&gt; 1/0.05 s = 20Hz.</p>
+<p><strong>Wiring Schematic</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/lab4micropschematic.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
+</figure>
+</div>
+<p>Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design.</p>
+<section id="results-and-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
+<p>To find each step to configure each timer and its respective registers, the STM32L432 reference manual was used.</p>
+<p>The steps taken for this lab were:</p>
+<p>Create pointers for each register inside each timer Initialize TIM16 and configure the PWM mode Link TIM6 to the MSI, and create a counter-up delay Combine these functions and run them inside the main file.</p>
+<p>An example of one of these steps from the datasheet can be seen below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/PWMmode.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: PWM mode for TIM16</figcaption>
+</figure>
+</div>
+<p>Above is sections 28.510 of the reference manual. It describes how to set up the TIM15 and TIM16 PWM mode by showing what registers to enable or what bits to put in different registers.</p>
+<p>The design uploaded to the STM32 was a success. It sucessfully produced Fur Elise, and another composition of my choice, which was te first few initial chrods of Thunderstruck by AC/DC.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The design was a success. Each note was played at the correct frequency (measured by the oscilliscope), and correctly delayed each PWM signal by the amount specified. Each notes volume was also controlled by a potentiometer. A seperate composition was created and worked as intended as well. This lab taught the importance of datasheets, registers, bit-wise functions, and header files. That being said it also taught the importance of knowing which CMSIS folders to use when using a new microcontroller.</p>
+<p>This Lab took 15 hours.</p>
+</section>
+<section id="suggestions" class="level2">
+<h2 class="anchored" data-anchor-id="suggestions">Suggestions</h2>
+<p>To, in future labs, better understand the differences in each clock, and understand what the benefits of using each other are. I also want to better understand the specific hardware that drives these clocks.</p>
+</section>
+<section id="ai-prototype" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prototype">Ai prototype</h2>
+<p>Here is the AI prototype for this lab. Posted below is the prompt that was plugged into Claude AI:</p>
+<p>What timers should I use on the STM32L432KC to generate frequencies ranging from 220Hz to 1kHz? What’s the best choice of timer if I want to easily connect it to a GPIO pin? What formulae are relevant, and what registers need to be set to configure them properly?</p>
+<p>The output (part):</p>
+<p>Why TIM2 is Optimal TIM2 is a 32-bit general-purpose timer that offers several advantages:</p>
+<p>PWM output capability - can directly drive GPIO pins 32-bit resolution - provides fine frequency control Multiple output channels - TIM2_CH1 through TIM2_CH4 Easy GPIO connection - dedicated timer output pins</p>
+<p>Basic Configuration Sequence</p>
+<p>Enable timer clock in RCC_APB1ENR1 Configure GPIO for alternate function (AF1 for TIM2) Set prescaler and auto-reload values Configure PWM mode in CCMRx register Enable channel output in CCER register Set duty cycle in CCRx register Start timer by setting CEN bit</p>
+<p>The Ai wanted me to use the TIM2 timer which is a good timer to use for the PWM output. It then gave me steps on how to set it up using the correct registers from the manul. The output from the model did not change when I also uploaded the reference manual for reference. However, the output did get more specific and gave me more direct code for the design:</p>
+<p>// Enable GPIOA clock RCC-&gt;AHB2ENR |= RCC_AHB2ENR_GPIOAEN;</p>
+<p>// Configure PA0 as alternate function (TIM2_CH1) GPIOA-&gt;MODER &amp;= ~(0x3 &lt;&lt; 0); GPIOA-&gt;MODER |= (0x2 &lt;&lt; 0); // Alternate function mode</p>
+<p>// Set alternate function 1 for TIM2 GPIOA-&gt;AFR[0] &amp;= ~(0xF &lt;&lt; 0); GPIOA-&gt;AFR[0] |= (0x1 &lt;&lt; 0); // AF1 for TIM2</p>
+<p>Overall this LLM was super fast (took about 5s to respond), andd it gave an accurate answer when it comes to specific registers and bit-wise functions. The LLM also generated code for the GPIO pins, which was very similar to the GPIO header file that was provided this lab. TIM 15 and 16 are the timers that I used due to them being more versatile in future designs. Overall, I belive the LLM did excellent in C and microcontroller design.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -219,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Note* The first two equations below were copied from lab 2</p>
 <p>To be able to solve for the correct clock cycles to correctly see both digits, we repeat the formula solved in lab 2. First use a frequency in which the human cannot see flickering. This was guessed at around 240 Hz. Then do 1/F to get time = 0.00416 seconds. Then divide this by 2 to get 1 toggle (on), which is 0.002083 seconds. Finally, to solve for amount of cycles the equation is N = t(toggle)* frequency(clk). Solving for this, N comes out to be 100,000 cycles.</p>
 <p>Thirdly, to find the overall input current for the 7-segment display, the formula V-Vf-Vs-IR=0 was used. The knowns for this equation are Vin, which is 3.3V, Vf, which is around 1.9V, Vs which is 0.25 (the Collector-Emmiter saturation), and the resistance used was 1kΩ based on how bright the light was. Using this, the current comes out to 1.15 mA, which is an acceptable current.</p>
-<p>Lastly for the keypad [new], the internal resistors of the FPGA were used, setting the resistance to 10kΩ.</p>
+<p>Lastly for the keypad [new], the internal resistors of the FPGA were used, setting the resistance to 100kΩ.</p>
 <p><strong>Block Diagram</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
