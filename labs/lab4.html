@@ -225,11 +225,19 @@ ul.task-list li input[type="checkbox"] {
 <p>That being said, we can test if we are getting the correct frequency/ delay, by plugging them into the aforementioned equations.</p>
 <p>If we do a ms of 1. ARR = 100<em>ms-1 = 99. (100 ticks </em>10 µs = 1ms)</p>
 <p>For frequency we can test 20hz with (freqclk / ((TIM16 -&gt; PSC +1) * freq)) - 1. ((1,000,000 / 4)*20) -1 = 49,999. Which is 1 µs tick per 50 ms period. f = 1/T -&gt; 1/0.05 s = 20Hz.</p>
+<p>To verify such we test on an oscilliscope:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/freq1percent.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
+</figure>
+</div>
+<p>Above in the left hand bottom corner you can see the measured frequency is 263Hz. This occured at the 11th cord, which was 264Hz. This measured frequency is 1% of the actual frequency.</p>
 <p><strong>Wiring Schematic</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/lab4micropschematic.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
+<figcaption>Figure 2: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
 </figure>
 </div>
 <p>Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design.</p>
@@ -245,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/PWMmode.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: PWM mode for TIM16</figcaption>
+<figcaption>Figure 3: PWM mode for TIM16</figcaption>
 </figure>
 </div>
 <p>Above is sections 28.510 of the reference manual. It describes how to set up the TIM15 and TIM16 PWM mode by showing what registers to enable or what bits to put in different registers.</p>
