@@ -5,10 +5,9 @@
 
 // Pitch in Hz, duration in ms
 #include "STM32L432KC_TIM16.h"
-#include "STM32L432KC_TIM6.h"
+#include "STM32L432KC_TIM7.h"
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_FLASH.h"
-#include "STM32L432KC_RCC.h"
 
 const int notes[][2] = {
 {659,	125},
@@ -123,6 +122,44 @@ const int notes[][2] = {
 
 
 
+// thunderstruck chords
+const int thunder[][2] = {
+    {494, 132},   // B4
+    {587, 132},   // D5
+    {659, 132},   // E5
+    {740, 132},   // F#5
+    {494, 132},   // B4
+    {659, 132},   // E5
+    {880, 132},   // A5
+    {740, 132},   // F#5
+    {494, 150},   // B4
+    {587, 150},   // D5
+    {659, 150},   // E5
+    {740, 150},   // F#5
+    {494, 150},   // B4
+    {659, 150},   // E5
+    {880, 150},   // A5
+    {740, 150},   // F#5
+    {494, 150},   // B4
+    {587, 150},   // D5
+    {659, 150},   // E5
+    {740, 150},   // F#5
+    {494, 150},   // B4
+    {659, 150},   // E5
+    {880, 150},   // A5
+    {740, 150},   // F#5
+    {494, 300},   // B4
+    {587, 300},   // D5
+    {659, 300},   // E5
+    {740, 300},   // F#5
+    {494, 300},   // B4
+    {659, 300},   // E5
+    {880, 300},   // A5
+    {740, 300},   // F#5
+    {0 ,0}
+};
+
+
 
 int main(void) {
 // Configure flash to add waitstates to avoid timing errors
@@ -130,20 +167,28 @@ configureFlash();
 
 // Setup the PLL and switch clock source to the PLL
 config16();
-configtim6();
+configtim7();
 
-pinMode(6, GPIO_ALT);
-
-GPIO->AFRL &= ~(0xF << 24);    
+pinMode(6, GPIO_ALT); // set pin and pin func
+GPIO->AFRL &= ~(0xF << 24);    // init pin6 and wire to tim
 GPIO->AFRL |= (14 << 24);
 
-for (int i = 0; notes[i][1] != 0; i++) {
-if (notes[i][1] == 0) {
-TIM16 ->CCER &=~1;
-delay(100000);                 
-}
-else {
+// for Fur Elise
+for (int i = 0; notes[i][1]; i++) {
 PWM(notes[i][0]);
 delay(notes[i][1]);
 }
-}}
+
+// for thunderstruck
+for (int i = 0; thunder[i][1]; i++) {
+PWM(thunder[i][0]);
+delay(thunder[i][1]);
+}
+TIM16->CCER &= ~1;// disable tim
+TIM16->CR1 &= ~1; 
+while(1){
+PWM(0);
+}
+
+     
+}
