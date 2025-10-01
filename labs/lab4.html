@@ -159,13 +159,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#equations" id="toc-equations" class="nav-link" data-scroll-target="#equations">Equations</a></li>
   </ul></li>
-  <li><a href="#tim16---pwm-timer" id="toc-tim16---pwm-timer" class="nav-link" data-scroll-target="#tim16---pwm-timer">TIM16 - PWM timer</a>
-  <ul class="collapse">
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions">Suggestions</a></li>
   <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">Ai prototype</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -216,13 +213,11 @@ ul.task-list li input[type="checkbox"] {
 <p>To be able to control the timer’s correctly, the design implemented sets internal prescalars which slows down the clock to be able to control the output minimum and maximum, frequency and duration.</p>
 <p>To perform this function, the design must first set the correct internal oscillator on, in this case it was the MSI clk. This clock oscillates at 4 MHz.</p>
 <p>To step down this clk for the wide range of frequency’s (0 to ~1500 Hz) and duration (0 to 500 ms) for this lab a correct prescalar must be set for each timer.<br>
-# TIM7 - delay timer</p>
+#### TIM7 - delay timer</p>
 <p>For timer7 (a basic timer), a prescaler of 39 was chosen to stepdown the MSI clk to 100 kHz. To calculate the minimum duration we take the clock rate that we dropped to 100kHz, and invert it to find the time. 1/100Khz = 10 µs per count. We then use the equation 100*ms - 1; to determine our ARR value.</p>
 <p>Minimum delay - The input frequency must be above 1 to prevent the underflow of bits. (100 * (0)-1) = -1. Maximum delay - The input frequency must be below the max value from our ARR * 100, which is m &lt;= 655.36ms.</p>
-</section>
-</section>
-<section id="tim16---pwm-timer" class="level1">
-<h1>TIM16 - PWM timer</h1>
+<section id="tim16---pwm-timer" class="level4">
+<h4 class="anchored" data-anchor-id="tim16---pwm-timer">TIM16 - PWM timer</h4>
 <p>For timer16 (a General-Purpose timer), a prescalar value of 3 was chosen to stepdown the PLL input clock to 1Mhz. Maximum freq - 1Mhz, which is out input frequency, although this value will unlikely sound. Minimum freq - Fmin = 1,000,000/ 65536 (the highest ARR) = 15.258789&nbsp;Hz</p>
 <hr>
 <p>That being said, we can test if we are getting the correct frequency/ delay, by plugging them into the aforementioned equations.</p>
@@ -236,6 +231,9 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design.</p>
+</section>
+</section>
+</section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
 <p>To find each step to configure each timer and its respective registers, the STM32L432 reference manual was used.</p>
@@ -276,7 +274,6 @@ ul.task-list li input[type="checkbox"] {
 <p>Overall this LLM was super fast (took about 5s to respond), andd it gave an accurate answer when it comes to specific registers and bit-wise functions. The LLM also generated code for the GPIO pins, which was very similar to the GPIO header file that was provided this lab. TIM 15 and 16 are the timers that I used due to them being more versatile in future designs. Overall, I belive the LLM did excellent in C and microcontroller design.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
