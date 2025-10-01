@@ -1,6 +1,6 @@
 // Drake Gonzales
 // drgonzales@g.hmc.edu
-// This Moduleis my header file for the timers used for lab4
+// This Module is my header file for the timers used for lab4
 // 9/28/25
 
 #ifndef STM32L4_TIM7_H
