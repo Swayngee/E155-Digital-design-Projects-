@@ -222,6 +222,10 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="tim16---pwm-timer">TIM16 - PWM timer</h4>
 <p>For timer16 (a General-Purpose timer), a prescalar value of 3 was chosen to stepdown the PLL input clock to 1Mhz. Maximum freq - 1Mhz, which is out input frequency, although this value will unlikely sound. Minimum freq - Fmin = 1,000,000/ 65536 (the highest ARR) = 15.258789&nbsp;Hz</p>
 <hr>
+<p>For 1% spec:</p>
+<p>The formula is: input frq clkfreq = 1,000,000 tickperiod = psc/clkfreq</p>
+<p>ARR -&gt; (clkfreq/((psc+1)<em>frq))-1 T -&gt; ARR </em> tickperiod</p>
+<p>f(output) = 1/T</p>
 <p>To calculate the 1% spec I ran a frequency through my equation, and found the output frequency. Each of which were within the 1% frequency spec.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
