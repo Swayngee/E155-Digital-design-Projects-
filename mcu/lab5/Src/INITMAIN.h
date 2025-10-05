@@ -1,3 +1,9 @@
+//Drake Gonzales
+//drgonzales@g.hmc.edu
+//This Module is my h file for main. it combines my init and handler c files
+//1/4/25
+
+
 #ifndef INITMAIN_H
 #define INITMAIN_H
 
