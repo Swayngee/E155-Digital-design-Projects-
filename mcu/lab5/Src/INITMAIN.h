@@ -1,3 +1,9 @@
+//Drake Gonzales
+//drgonzales@g.hmc.edu
+//This Module is my h file for main. it combines my init and handler c files
+//1/4/25
+
+
 #ifndef INITMAIN_H
 #define INITMAIN_H
 
@@ -8,8 +14,7 @@
 
 #define DELAY_TIM TIM2
 
-extern volatile int countA;
-extern volatile int countB;
+extern volatile int32_t position;
 
 void inintAB(void);
 void EXTI2_IRQHandler(void);
