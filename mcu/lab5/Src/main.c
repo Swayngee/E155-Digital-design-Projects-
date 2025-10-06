@@ -9,7 +9,6 @@
 
 volatile uint32_t rev = 0;
 int dir = 0;
-double revolutions =0;
 double zero =0;
 
 int main(void){
@@ -17,20 +16,15 @@ GPIOenable();
 inintAB();
 
 while(1){
+int32_t prev = 0;
+double revolutions =0;
+int32_t d = position - prev;
+prev = position;
+revolutions = (double)d / 1632.0;  
 
-if (position > 0) {
-    dir = 1;
-} else if (position < 0) {
-    dir = -1;
-}
-
-if (position  != 0){
-revolutions += position /7.0;
-
-  if(position >= 7){
-    position = 0;
-  }
-}
+if (d > 0) dir = 1;
+else if (d < 0) dir = -1;
+else dir = 0;
 
 delay_millis(TIM7, 1000); 
 if (dir == 1) {
@@ -42,7 +36,6 @@ else {
     printf("Speed = %.2f rev/s, Direction = unknown\n", zero);
 }
 
-revolutions = 0;
 
 }
 }
