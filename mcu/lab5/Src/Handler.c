@@ -1,7 +1,4 @@
-//Drake Gonzales
-//drgonzales@g.hmc.edu
-//This Module is my c file for the interupt handlers
-//1/4/25
+
 
 #include <stm32l432xx.h>
 #include "INITMAIN.h"
@@ -43,7 +40,5 @@ void EXTI2_IRQHandler(void){
 
     }
 }
-
-
 
 

@@ -1,8 +1,4 @@
-//Drake Gonzales
-//drgonzales@g.hmc.edu
-//This Module is my main file for lab5
-//1/4/25
-    
+
 
 #include "INITMAIN.h"
 #include "STM32L432KC.h"
@@ -36,5 +32,4 @@ rev = 0;
 
 }
 }
-
 

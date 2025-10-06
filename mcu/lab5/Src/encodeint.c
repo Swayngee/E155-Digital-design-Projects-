@@ -1,7 +1,4 @@
-//Drake Gonzales
-//drgonzales@g.hmc.edu
-//This Module is my init.c file for all of my functions used
-//1/4/25
+    
     
 
 #include <stm32l432xx.h>
@@ -63,4 +60,3 @@ int _write(int file, char *ptr, int len) {
   }
   return len;
 }
-
