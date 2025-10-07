@@ -225,12 +225,13 @@ ul.task-list li input[type="checkbox"] {
 <p>For 1% spec:</p>
 <p>The formula is:</p>
 <p>input frq clkfreq = 1,000,000 tickperiod = psc/clkfreq</p>
-<p>ARR -&gt; (clkfreq/((psc+1)<em>frq))-1 T -&gt; ARR </em> tickperiod</p>
+<p>ARR -&gt; (clkfreq/((psc+1)*frq))-1</p>
+<p>T -&gt; ARR * tickperiod</p>
 <p>f(output) = 1/T</p>
 <p>To calculate the 1% spec I ran a frequency through my equation, and found the output frequency. Each of which were within the 1% frequency spec.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/spreadsheet.png" class="img-fluid figure-img"></p>
+<p><img src="../images/screenshotttt.png" class="img-fluid figure-img"></p>
 <figcaption>Figure 1: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
 </figure>
 </div>
