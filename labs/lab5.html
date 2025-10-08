@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#interrupt-vs-polling" id="toc-interrupt-vs-polling" class="nav-link" data-scroll-target="#interrupt-vs-polling">Interrupt vs polling</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions">Suggestions</a></li>
+  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">AI Prototype</a></li>
   </ul>
 </nav>
     </div>
@@ -323,7 +324,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="suggestions" class="level2">
 <h2 class="anchored" data-anchor-id="suggestions">Suggestions</h2>
-<p>Go through and understand each CMSIS file, and understand the stm32L4xxx header file. ## AI Prototype</p>
+<p>Go through and understand each CMSIS file, and understand the stm32L4xxx header file.</p>
+</section>
+<section id="ai-prototype" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prototype">AI Prototype</h2>
 <p>This is the AI prototype for this lab. The prompt that was ran through Claude AI was:</p>
 <p>Write me interrupt handlers to interface with a quadrature encoder. I’m using the STM32L432KC, what pins should I connect the encoder to in order to allow it to easily trigger the interrupts?</p>
 <p>The code that was produced as a result was :</p>
@@ -418,6 +422,15 @@ while (1)
 <p>}</p>
 <p>/* Weak error handler - implement your own */ __weak void Error_Handler(void) { __disable_irq(); while (1) { } }</p>
 <p>/* Weak system clock config - implement based on your setup */ __weak void SystemClock_Config(void) { // Configure your system clock here }</p>
+<p>Related questions:</p>
+<p>How would you rate the quality of the output and why?</p>
+<p>I think the output produced is a little confusing. It has overall weird syntax that have not seen regarding the stm32Lxxx.h header. One example of this can be seen in ‘HAL_TIM_Encoder_Start(&amp;htim2, TIM_CHANNEL_ALL);’. Almost everywhere in the code i see the ‘HAL’ notation but i am quite unsure what this notation means.</p>
+<p>Did the LLM generate any code for you? If so, how does it compare to your setup?</p>
+<p>Like explained above, it uses irregular syntax from what I am used to. This caused me to be confused. This syntax might be correct however as I dont know the full extent to the stm32L4xxx header.</p>
+<p>How does the LLM’s explanation compare to your reasoning for choosing your timer?</p>
+<p>The same timer was chosen. This is just one of the basic overall timers used within the STM32.</p>
+<p>Does the LLM work well as a sounding board, rather than a code generator as used in previous prototypes?</p>
+<p>I think the LLM works well in giving you overall strcuture for the code and giving you the overall idea of what your code should generally look like. This can be important in fomrulating ideas, but is bad if you dont know where to look for the correct functions within the header file.</p>
 
 
 </section>
