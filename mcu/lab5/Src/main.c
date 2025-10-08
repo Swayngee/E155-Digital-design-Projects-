@@ -5,7 +5,7 @@
 
 #include "INITMAIN.h"
 #include "STM32L432KC.h"
-
+//init vars
 volatile uint32_t rev = 0;
 int dir = 0;
 float zero =0;
@@ -21,7 +21,7 @@ inintAB();
 while(1){
 // In main loop
 d = position;
-position = 0;
+position = 0; //reset pos each 1Hz print to not add values
 revolutions = (float) (d *(1000/timer)) / (4 * 408);  //408 PPR
 
 if (d > 0) dir = 1; //set directions
@@ -30,14 +30,14 @@ else dir = 0;
 
 delay_millis(TIM2, timer); //1Hz delay
 
-if (dir == 1) {
+if (dir == 1) { //print based on direction
     printf("Speed = %f rev/s, Direction = CW\n", revolutions);
 } else if (dir == -1) {
     printf("Speed = %f rev/s, Direction = CCW\n", -revolutions);
 }
 
 else {
-printf("Speed = %f rev/s, Direction = none\n", zero);
+printf("Speed = %f rev/s, Direction = none\n", zero); //zero case
 }
 }
 }
