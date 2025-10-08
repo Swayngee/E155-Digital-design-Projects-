@@ -292,6 +292,8 @@ ul.task-list li input[type="checkbox"] {
 <p>f = (CPU freq) / cycles -&gt; 824,742.268 Hz</p>
 <p>With a period of:</p>
 <p>t (latency) = 1/f -&gt; 1.21 μs</p>
+<p>Using our f we can find the max speed:</p>
+<p>speed(max) = 824,742.268 (edges/s) / 816 edges/rev = 1010.71&nbsp;rev/s</p>
 <p>In the polling approach, the CPU executes the GPIO read loop continuously, using nearly 100% of processing time, even when no edges occur.</p>
 <p>Comparing this to interrupt, the same steps were completed as before. Below is the assembly instructions used.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -307,6 +309,9 @@ ul.task-list li input[type="checkbox"] {
 <p>The latency for the interrupts is 12 cycles which can be found here: <a href="https://hmc-e155.github.io/assets/doc/DDI0439B_cortex_m4_r0p0.pdf">Cortex-M4 Technical Reference Manual</a></p>
 <p>The interrupt hardware latency, i.e., the time from the encoder edge to the first instruction of the ISR, is:</p>
 <p>t (latency) = 12/ CPU freq = 0.15 μs</p>
+<p>Using our f we can find the max speed:</p>
+<p>1/t = 6,666,666 Hz</p>
+<p>speed(max) = f / 816 = 8169.9 rev /s</p>
 <p>Thus, compared to polling, interrupts significantly reduce CPU usage while providing near-instantaneous response to encoder events.</p>
 <p>At higher speeds the encoder can generate edges faster than the polling loop can check them. Thus, some edges may be missed because the CPU hasn’t completed the current loop iteration. However when running interrupts they are event-driven, so each encoder edge triggers the ISR immediately, regardless of overall motor speed.</p>
 <p>Below is a summary table of the mathematical differences between the two.</p>
