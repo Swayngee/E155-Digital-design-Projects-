@@ -292,7 +292,13 @@ ul.task-list li input[type="checkbox"] {
 <p>With a period of:</p>
 <p>t (latency) = 1/f -&gt; 1.21 μs</p>
 <p>In the polling approach, the CPU executes the GPIO read loop continuously, using nearly 100% of processing time, even when no edges occur.</p>
-<p>Comparing this to interrupt, the same steps were completed as before.</p>
+<p>Comparing this to interrupt, the same steps were completed as before. Below is the assembly instructions used.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/assemint.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 8: Assembly for interrupt code</figcaption>
+</figure>
+</div>
 <p>The cycles calculated were 57 cycles with 8160 pulses (we are only counting one edge per wave)</p>
 <p>Each encoder edge triggers an interrupt, so the CPU only does work when an event occurs.</p>
 <p>CPU time = (57 * 8,160) / CPU freq -&gt; 0.58 %</p>
@@ -306,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/finalchart.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 8: Summary Table</figcaption>
+<figcaption>Figure 9: Summary Table</figcaption>
 </figure>
 </div>
 </section>
