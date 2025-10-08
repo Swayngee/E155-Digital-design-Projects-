@@ -219,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="equations" class="level3">
 <h3 class="anchored" data-anchor-id="equations">Equations</h3>
 <p>The only equations applicable to this lab are the ones used to calculate how many edges to account for. The equation used was:</p>
-<p>revolutions = position <em>(1000/timer) / (4 </em> 408)</p>
+<p>revolutions = position (1000/timer) / (4 x 408)</p>
 <p>This equation multiplies the encoder count (position counter) by the sampling rate (samples per second), then divides by the total number of quadrature edges per revolution.</p>
 <p>An example of this equation in the works can be seen below. Below is an osilliscope frame of the output of the B encoder. This occured at 10V input into the motor.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -229,14 +229,14 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>Each square wave period corresponds to one pulse of the encoder signal. The frequency of these pulses increases with motor speed, which is directly controlled by the input voltage.</p>
-<p>We know that f = 1/T -&gt; f = 1/1.30 ms -&gt; f = 970Hz</p>
+<p>We know that f = 1/T -&gt; 970Hz</p>
 <p>Using the relationship between speed, frequency, and PPR we get:</p>
-<p>speed (rev/s) = f / PPR -&gt; speed = 970Hz/408 PPR = 2.37 rev/s</p>
+<p>speed (rev/s) = f / PPR -&gt; 2.37 rev/s</p>
 <p>When comparing this to the actual value measured by our interrupts, we can see the same value. As seen below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/speedlab5.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 3: Animation of quadrature encoder</figcaption>
+<figcaption>Figure 3: Speed values printied in debug terminal</figcaption>
 </figure>
 </div>
 <p>Above are the values that we were getting from our debug terminal from our interrupt code. These values, when compared to our theoretical values, are within a 1% margin. Thus validating the output coming from our code.</p>
@@ -297,12 +297,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Each encoder edge triggers an interrupt, so the CPU only does work when an event occurs.</p>
 <p>CPU time = (57 * 8,160) / CPU freq -&gt; 0.58 %</p>
 <p>So interrupts only use 0.58% of CPU time, leaving the other 99.4% for other tasks.</p>
-<p>That being said the latency for interrupts is 12 cycles. This was found in the <a href="https://hmc-e155.github.io/assets/doc/DDI0439B_cortex_m4_r0p0.pdf">Cortex-M4 Technical Reference Manual</a> saying: To reduce interrupt latency, the processor implements both interrupt late-arrival and interrupt tail-chaining mechanisms, as defined by the ARMv7-M architecture: There is a maximum of a 12 cycle latency from asserting the interrupt to execution of the first instruction of the ISR …”</p>
+<p>The latency for the interrupts is 12 cycles which can be found here: <a href="https://hmc-e155.github.io/assets/doc/DDI0439B_cortex_m4_r0p0.pdf">Cortex-M4 Technical Reference Manual</a></p>
 <p>The interrupt hardware latency, i.e., the time from the encoder edge to the first instruction of the ISR, is:</p>
 <p>t (latency) = 12/ CPU freq = 0.15 μs</p>
 <p>Thus, compared to polling, interrupts significantly reduce CPU usage while providing near-instantaneous response to encoder events.</p>
 <p>At higher speeds the encoder can generate edges faster than the polling loop can check them. Thus, some edges may be missed because the CPU hasn’t completed the current loop iteration. However when running interrupts they are event-driven, so each encoder edge triggers the ISR immediately, regardless of overall motor speed.</p>
-<p>Coming all together here is a summary table of the mathematical differences between the two.</p>
+<p>Below is a summary table of the mathematical differences between the two.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/finalchart.jpg" class="img-fluid figure-img"></p>
