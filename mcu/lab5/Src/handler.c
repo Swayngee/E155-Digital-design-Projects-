@@ -5,7 +5,7 @@
 
 #include <stm32l432xx.h>
 #include "STM32L432KC.h"
-#include "INITMAIN.h"
+#include "main.h"
 
 
 volatile int32_t position = 0;
