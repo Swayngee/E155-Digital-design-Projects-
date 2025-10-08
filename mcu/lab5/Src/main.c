@@ -3,7 +3,7 @@
 //This Module is my main file for lab5
 //1/4/25
 
-#include "INITMAIN.h"
+#include "main.h"
 #include "STM32L432KC.h"
 //init vars
 volatile uint32_t rev = 0;
