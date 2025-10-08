@@ -53,7 +53,7 @@
     "href": "labs/lab5.html#conclusion",
     "title": "E155 portfolio",
     "section": "Conclusion",
-    "text": "Conclusion\nThe design was a success uploaded for this lab was a success. The STM32L432KC correctly took the input from the encoder, and provided speed and directional data. This lab was done using the CMSIS code provided by STM unlike lab 4. This made the code more structured and provided more readability for the reader.\nThis Lab took 8 hours."
+    "text": "Conclusion\nThe design was a success uploaded for this lab was a success. The STM32L432KC correctly took the input from the encoder, and provided speed and directional data. This lab was done using the CMSIS code provided by STM unlike lab 4. This made the code more structured and provided more readability for the reader.\nThis Lab took 13 hours."
   },
   {
     "objectID": "labs/lab5.html#suggestions",
