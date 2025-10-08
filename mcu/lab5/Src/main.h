@@ -4,8 +4,8 @@
 //1/4/25
 
 
-#ifndef INITMAIN_H
-#define INITMAIN_H
+#ifndef main_H
+#define main_H
 
 #include <stm32l432xx.h>
 //PA1 and PA2 are 5V acceptable pins. PA2 is p7 on the board 
