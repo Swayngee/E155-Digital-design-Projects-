@@ -214,6 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
 <p>The source code for this lab can be found in this <a href="https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab5">GitHub repo</a>.</p>
 <p>The documentation for the STM32L432KC manual <a href="https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf">Github link</a>.</p>
+<p>The source Instruction to cycles documentation <a href="https://developer.arm.com/documentation/ddi0439/b/CHDDIGAC">ARM website</a>.</p>
 <section id="equations" class="level3">
 <h3 class="anchored" data-anchor-id="equations">Equations</h3>
 <p>The only equations applicable to this lab are the ones used to calculate how many edges to account for. The equation used was:</p>
@@ -222,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 <p>An example of this equation in the works can be seen below. Below is an osilliscope frame of the output of the B encoder. This occured at 10V input into the motor.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/example5.png" class="img-fluid figure-img"></p>
+<p><img src="../images/example5.jpg" class="img-fluid figure-img"></p>
 <figcaption>Figure 2: Animation of quadrature encoder</figcaption>
 </figure>
 </div>
@@ -260,12 +261,43 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
 <p>The results of this lab were a success. The MC correctly recorded the rev/s of the motor for low and high speeds using interupts and timers. Two interupts were used for each edge of the encoder (A and B), and a timer was used for the 1/2 second delay for the display.</p>
 <p>Interrupt vs polling</p>
-<p>Before this lab I thought that polling would be a more efficient option compared to anything else. Polling is just something that I was used to when doing Systemverilog, or Python, however I think the difference between interrupts and polling is phenomenoal. To reinstate their overall differences:</p>
+<p>Before this lab I thought that polling would be a more efficient option compared to anything else. Polling is just something that I was used to when doing Systemverilog, or Python, however I think the difference between interrupts and polling is huge. To reinstate their overall differences:</p>
 <p>Interrupts are a hardware-driven mechanism that temporarily pause the CPU’s current task to handle a specific event (such as a GPIO input change). Once the interrupt service routine (ISR) finishes executing, the CPU returns to its previous task. This approach can be more efficient because the CPU only reacts when needed, reducing unnecessary processing and potentially lowering power consumption.</p>
 <p>Polling, in contrast, continuously checks the status of an input in a loop. The CPU repeatedly reads the GPIO pin and processes the data even if nothing has changed. This method is simpler to implement but uses more CPU time and power since the processor is always active and waiting for pins to go high or low.</p>
 <p>Mathematically, their difference can be represented by the following:</p>
-<p>Lets first start with the given values for this lab: clk frequency (4Mhz), frequency event (1 Hz), time between events (1000 ms)</p>
-<p>Next we need values to compare this to thus we need to understand how polling can be done for this lab. The design must be able to read the GPIO pin constantly, then make an if statement if the statement is true.</p>
+<p>To analyze polling for this lab, we consider reading a GPIO pin continuously and executing a conditional statement on each iteration. The example polling file can be seen below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/blocks.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Code for manual polling</figcaption>
+</figure>
+</div>
+<p>To be able to tell how fast this polling occurs we need to seperate this code into instructions, then estimate how many cycles per instruction there are to be able to decide the overall frequency of the while loop. The assembly instruction for the code above can be found below. Given by SEGGER.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/blocks.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 7: Assembly instructions</figcaption>
+</figure>
+</div>
+<p>Above is the general instructions for the code given. However it does not include the instructions for the called functions. Those, however WERE included in the calculation.</p>
+<p>However we need to know how many individual cycles for each instruction we have so we can calculate how many instructions total. The link above in the Technical Documentation tab is from the ARM website for the CORTEX M-4. ARM, the designer for the CORTEX M-4 series, documented how many cycles for each instruction.</p>
+<p>From this, we can calculate how many cycles our whole polling code takes.</p>
+<p>This number comes out to around 97 cycles in the condition that each branch instr is 2 cycles, and that we did not include the delay_millis or the while (UIF).</p>
+<p>Back to our earlier calculations, we find the frequency of polling using a CPU freq of 80 Mhz.</p>
+<p>f = (CPU freq) / cycles -&gt; 824,742.268 Hz</p>
+<p>With a period of:</p>
+<p>t (latency) = 1/f -&gt; 1.21 μs</p>
+<p>In the polling approach, the CPU executes the GPIO read loop continuously, using nearly 100% of processing time, even when no edges occur.</p>
+<p>Comparing this to interrupt, the same steps were completed as before.</p>
+<p>The cycles calculated were 57 cycles with 8160 pulses (we are only counting one edge per wave)</p>
+<p>Each encoder edge triggers an interrupt, so the CPU only does work when an event occurs.</p>
+<p>CPU time = (57 * 8,160) / CPU freq -&gt; 0.58 %</p>
+<p>So interrupts only use 0.58% of CPU time, leaving the other 99.4% for other tasks.</p>
+<p>That being said the latency for interrupts is 12 cycles. This was found in the <a href="https://hmc-e155.github.io/assets/doc/DDI0439B_cortex_m4_r0p0.pdf">Cortex-M4 Technical Reference Manual</a> saying: To reduce interrupt latency, the processor implements both interrupt late-arrival and interrupt tail-chaining mechanisms, as defined by the ARMv7-M architecture: There is a maximum of a 12 cycle latency from asserting the interrupt to execution of the first instruction of the ISR …”</p>
+<p>The interrupt hardware latency, i.e., the time from the encoder edge to the first instruction of the ISR, is:</p>
+<p>t (latency) = 12/ CPU freq = 0.15 μs</p>
+<p>Thus, compared to polling, interrupts significantly reduce CPU usage while providing near-instantaneous response to encoder events.</p>
+<p>Coming all together here is a summary table of the mathematical differences between the two.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
