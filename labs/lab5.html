@@ -270,7 +270,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Interrupts are a hardware-driven mechanism that temporarily pause the CPU’s current task to handle a specific event (such as a GPIO input change). Once the interrupt service routine (ISR) finishes executing, the CPU returns to its previous task. This approach can be more efficient because the CPU only reacts when needed, reducing unnecessary processing and potentially lowering power consumption.</p>
 <p>Polling, in contrast, continuously checks the status of an input in a loop. The CPU repeatedly reads the GPIO pin and processes the data even if nothing has changed. This method is simpler to implement but uses more CPU time and power since the processor is always active and waiting for pins to go high or low.</p>
 <p>Mathematically, their difference can be represented by the following:</p>
-<p>To analyze polling for this lab, we consider reading a GPIO pin continuously and executing a conditional statement on each iteration. The example polling file can be seen below:</p>
+<p>To analyze polling for this lab, we consider reading a GPIO pin continuously and executing a conditional statement on each iteration. We also write this value. The example polling file can be seen below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/pollingc.png" class="img-fluid figure-img"></p>
@@ -300,10 +300,10 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Figure 8: Assembly for interrupt code</figcaption>
 </figure>
 </div>
-<p>The cycles calculated were 57 cycles with 8160 pulses (we are only counting one edge per wave)</p>
+<p>The cycles calculated were 57 cycles with 408 * 2 edges (we are only utilizing one encoder, but both edges) (We arent counting direction)</p>
 <p>Each encoder edge triggers an interrupt, so the CPU only does work when an event occurs.</p>
-<p>CPU time = (57 * 8,160) / CPU freq -&gt; 0.58 %</p>
-<p>So interrupts only use 0.58% of CPU time, leaving the other 99.4% for other tasks.</p>
+<p>CPU time = (57 * 816) / CPU freq -&gt; 0.058 %</p>
+<p>So interrupts only use 0.058% of CPU time when counting up to 1 full revolution, leaving the other 99.95% for other tasks.</p>
 <p>The latency for the interrupts is 12 cycles which can be found here: <a href="https://hmc-e155.github.io/assets/doc/DDI0439B_cortex_m4_r0p0.pdf">Cortex-M4 Technical Reference Manual</a></p>
 <p>The interrupt hardware latency, i.e., the time from the encoder edge to the first instruction of the ISR, is:</p>
 <p>t (latency) = 12/ CPU freq = 0.15 μs</p>
@@ -312,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Below is a summary table of the mathematical differences between the two.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/pollingvsint2.png" class="img-fluid figure-img"></p>
+<p><img src="../images/pollingvsint3.png" class="img-fluid figure-img"></p>
 <figcaption>Figure 9: Summary Table</figcaption>
 </figure>
 </div>
