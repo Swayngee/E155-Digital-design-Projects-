@@ -1,6 +1,6 @@
 ---
 theme: solar
-date: "12/01/25"
+date: "10/15/25"
 categories:
   - labreport
 draft: false
@@ -8,3 +8,52 @@ draft: false
 ## Lab 6 - The Internet of Things and Serial Peripheral Interface
 
 ## Introduction
+
+In this lab, a design was made to use a microcontroller, the SPI interface, and the UART interface to build and design an IoT device. One first part of this design incorporated an SPI link between the microcontroller and a DS1722 temperature sensor. This link was written over the peripherals, MISO, MOSI, CE, and SYSCLK. The next part was an UART connection between the microcontroller and a ESP8266 wifi module. The wifi module would output the temperature values and the resolution coming from the microcontroller. As the final part of the design, a website was created within the microcontroller to output the temperature values and the user is able to control the temperture resolution, and an onboard LED. 
+
+The design was developed using C on SEGGER, and implemented on an STM32L432KC Microcontroller. 
+
+## Technical Documentation 
+
+The source code for this lab can be found in this [GitHub repo](https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab6).
+
+The documentation for the STM32L432KC manual [Github link](https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf).
+
+The documentation for the DS1722 [Github link](https://hmc-e155.github.io/assets/doc/ds1722.pdf).
+
+The documentation for the ESP8266 [Github repo](https://github.com/HMC-E155/tutorial-esp8266-click-webserver).
+
+### Equations
+
+There were no equations used for this lab. 
+
+#### Logic Analyzer
+
+
+
+
+#### Printed Temperature Values 
+
+![Figure 2: Below is an example of the output from the website](../images/lab4micropschematic.jpg)
+
+**Wiring Schematic**
+
+![Figure 3: This schematic shows the wiring and components between our dev board, the ESP8266, the DS1722, and the onboard LED](../images/lab4micropschematic.jpg)
+
+Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design. 
+
+## Results and Discussion
+
+
+
+## Conclusion
+The design was a success. The microcontroller successfully was linked via SPI to the DS1722, and via UART to the ESP8266. Along with this, a webiste was created successfully to read the temperature values over wifi from the ESP8266, and the user was able to change and control a LED, and the resolution of the temperature sensor. 
+
+This Lab took 12 hours. 
+
+## Suggestions
+To, in future labs, better understand the SPI interface beforehand and understand how it compares to other communication protocols such as I2C. 
+
+## Ai prototype
+Here is the AI prototype for this lab. Posted below is the prompt that was plugged into Claude AI: 
+

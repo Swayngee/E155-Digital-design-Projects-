@@ -1,10 +1,201 @@
 ---
 theme: solar
-date: "9/11/25"
+date: "9/22/25"
 categories:
   - labreport
 draft: false
 ---
+
+
 ## Lab 3 - Keypad Scanner
 
 ## Introduction
+
+In this lab, a design made to take an input from a keypad, and display the output onto a time multiplexed seven-segment display. Lab 2 covered time multiplexing in depth, and this lab is build off of that along with adding a Finite State Machine (FSM) to control specific inputs and outputs. The 7-segment display will display the current number pressed on the right, and the left will display the number that was pressed in the past. This design was implemented on an FPGA with an input of {rows} and reset from the keypad, and an output of cols, disp1, disp2, and seg.  
+
+The design was developed using SystemVerilog, a hardware description language, and was tested using Intels Questa, a logic waveform simulator. 
+
+
+## Technical Documentation 
+
+The source code for this lab can be found in this [GitHub repo](https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab3).
+
+### Equations
+
+Note* The first two equations below were copied from lab 2
+
+To be able to solve for the correct clock cycles to correctly see both digits, we repeat the formula solved in lab 2. First use a frequency in which the human cannot see flickering. This was guessed at around 240 Hz. Then do 1/F to get time = 0.00416 seconds.  Then divide this by 2 to get 1 toggle (on), which is 0.002083 seconds. Finally, to solve for amount of cycles the equation is N = t(toggle)* frequency(clk). Solving for this, N comes out to be 100,000 cycles. 
+
+Thirdly, to find the overall input current for the 7-segment display, the formula V-Vf-Vs-IR=0 was used. The knowns for this equation are Vin, which is 3.3V, Vf, which is around 1.9V, Vs which is 0.25 (the Collector-Emmiter saturation), and the resistance used was 1kΩ based on how bright the light was. Using this, the current comes out to 1.15 mA, which is an acceptable current. 
+
+Lastly for the keypad [new], the internal resistors of the FPGA were used, setting the resistance to 100kΩ. 
+
+
+**Block Diagram**
+
+![Figure 1: This block diagram shows the connection between the FPGA, its inside hardware, and the keypad utilized in lab 3.](../images/newtoplab3.jpg)
+
+The block diagram above portrays the modules used for this lab design. It includes the top module, the state machine, the controller, decoder, synchronizer, and the inputs and outputs of each module. 
+
+**Registers**
+
+Below are the registers for each coresponding module for the block diagram. Each register contains a clock and a reset input. 
+![Figure 2: This block diagram shows the registers for the controlseg module.](../images/contseg.jpg)
+
+Figure 2 shows the registers used for our controlseg module. 
+
+![Figure 3: This block diagram shows the registers for the sync module.](../images/syncreg.jpg)
+
+The register above portrays the registers used for our sychronizer. Each flip flop is on the same clock (int_osc). 
+
+![Figure 4: This block diagram shows the registers for the top module.](../images/topreg.jpg)
+
+The above registers were used for the clock divider for our HSOSC clock. 
+
+
+**Wiring Schematic**
+
+![Figure 5: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.](../images/lab3schematic.jpg)
+
+Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design. 
+
+**Finite State Machine**
+
+![Figure 6: Above is the state machine used for the design.](../images/lab3fsm.jpg)
+
+Above pictures the FSM created for this lab. It features five states, each with inputs and outputs (except drive). It starts at Idle, where the reset is placed. 
+
+
+## Results and Discussion
+
+The design that was uploaded to the FPGA was a success. It correctly flickered the 7-segment display (built off of last lab) and correctly displayed the input from the keypad onto the 7-segment display, with the most recent digit on the right, and the past digit on the left. The design was not successfull in the way it handled edge cases (such as holding down a button and pressing another one). This is the one spec I did not meet. 
+
+### Testbench Simulation
+
+The following simulations were run on Intel's Questa. This was done to visually see the waveforms created as a result of the logic used. To complete this simulation, a testbench was created to run test vectors through the logic created. Each testbench below was written different. 
+
+For the 7-segment testbench design, a testvector file was created to run through all possible switch inputs and outputs to our 7-segment display. The difference between this design and lab 2 was I directly converted from the input rows to the segment output. In lab 2 i converted to hex first. 
+
+Secondly, the schronizer module testbench, a test was done by throwing in rows into the module, and recording the specific output, and comparing them to the expected. 
+
+Thirdly, the controller module testbench, sort of the same idea but there was a mux that controlled the system, and an enabler for the flip flops. Tests were added for the mux inputs and outputs.
+
+Fourthly, the state module testbench, rows were inputted into the module and internal signals were analyzed based on these inputs. This was useful in visually seeing the change of state, and to easily follow, the state machine and its outputs. 
+
+Lastly, to test the top module, three edge cases were inputted into the system to see if they reacted in the way intended. Internal signals were used to determine when things went wrong. 
+
+**7-segment Display Simulation** 
+
+![Figure 7: Above pictures the waveforms corresponding to the combinational logic used for the 7-segment display](../images/lab3seg.png)
+
+Above is waveform simulation for the the 7-segment display design. This design was purely combinational logic, and shows the conversion from the debounced row input to the segment output. 
+
+**Schronizer Simulation**
+
+![Figure 8: Above pictures the waveforms corresponding to the logic used for the schronizer](../images/lab3sync.png)
+
+Figure 8 shows the simulation for the schronizer design. This design was simple, and it just cheked that after two clock cycles, the output got the same input. 
+
+**Controller Simulation**
+
+![Figure 9: Above pictures the waveforms corresponding to the controller](../images/cont.png)
+
+Figure 9 shows the controller simulation. It hosts the same idea as the schronizer, however the design had to take account for the mux, and ifferent enablers, which is seen above. 
+
+**State machine Simulation**
+
+![Figure 10: Above pictures the waveforms corresponding to the FSM](../images/lab3statemachinetestbench.png)
+
+Above shows the overall state machine, and its inputs and outputs. The design of the testbench implemented hosted just a test of different inputs, and instead of a typical testbench throwing back errors, waveforms can be visually seen to check whether the deisng implemnted worked. 
+
+
+**Top Module Simulation**
+
+![Figure 11: Above pictures the waveforms corresponding to the top module](../images/lab3toptestbench.png)
+
+Above is the final simulation made for this design. It throws in inputs and tests the expected outputs. The internal signals were also helpful in this module to test that things were flowing correclty throughout the module. It is also helpful to see the full layout of asynchronous and synchronous design. 
+
+## Conclusion
+
+The design created was a successs. With each segment on the 7-segment display illuminating at the correct frequency (repeat from lab 2), and correctly displaying the output from a keypad onto the 7-segment display. However, there was one setback in which when one button was pressed, then another, realsed the first one, it did not register the next one correctly. This would happen in the same row and collumn of the original button pressed. Thus I did not meet the excellence spec for this lab. 
+
+## Suggestions
+
+To maybe look at internal signals more when checking waveforms. Its much easier to see whats wrong rather than assert statements. 
+
+## Ai prototype
+
+### Below are the prompts for the AI prototype
+1. 
+Target device: Lattice iCE40 UP5K FPGA with internal high-speed oscillator (~20 MHz).
+
+Write synthesizable SystemVerilog to scan a 4x4 matrix keypad and display the last two hex keys pressed on a dual 7‑segment display. Implement:
+
+A clock divider that derives a scan clock on the order of 100–200 Hz from the internal oscillator.
+A keypad scanning controller that iterates one active‑low column at a time and samples active‑low rows, registering at most one key per press (debounce‑by‑design), ignoring additional presses while any key is held, and allowing a new registration only after release.
+A top level that updates two hex digits (older and most recent) when a new key is registered and drives a time‑multiplexed two‑digit 7‑segment display without visible flicker and with balanced brightness.
+Use idiomatic SystemVerilog (e.g., logic, always_ff, enumerated states for FSMs). Provide clean module boundaries and keep all state synchronous. Include brief comments explaining the design choices.
+
+
+2. 
+Target device: Lattice iCE40 UP5K FPGA.
+
+Overall Goal: Write SystemVerilog to scan a 4x4 matrix keypad and display the last two hex keys pressed on a dual 7 segment display.
+
+Current Goal: Write a synthesizable SystemVerilog module that produces a one‑shot registration signal for the keypad system. Behavior:
+
+When a key press is first detected, capture the current key code and assert a single‑cycle “new key” pulse.
+While any key remains pressed, do not accept additional keys.
+Only after keys are released should a subsequent press be recognized.
+This should handle debouncing of the keys.
+Implement as a small synchronous FSM with enumerated states and glitch‑free outputs. Keep names and interfaces reasonable; do not assume any hidden modules beyond what you define here.
+
+3. 
+Target device: Lattice iCE40 UP5K FPGA.
+
+Write a synthesizable SystemVerilog module that cycles through keypad columns (active‑low, one at a time) and samples rows (active‑low) to detect a single key at a time. Behavior:
+
+Iterate columns at a suitable scan rate derived from the divided clock and sample rows.
+When a key is detected, report a stable key code consistent with a standard 4x4 keypad layout and maintain it while the key remains pressed.
+Provide a boolean signal indicating whether any key is currently pressed.
+Use clean state encoding and synchronous logic; avoid combinational feedback and latches.
+
+4. 
+Target device: Lattice iCE40 UP5K FPGA with internal oscillator as the root clock source.
+
+Write a top‑level SystemVerilog module that instantiates the scanner and one‑shot modules, shifts the last two keys (older ← most recent; most recent ← new), and drives a multiplexed two‑digit seven‑segment display. Requirements:
+
+Update the displayed digits only when a new key is registered.
+Ensure equal apparent brightness and no visible flicker.
+Keep all logic synthesizable and synchronous; use idiomatic SystemVerilog constructs.
+Provide any small clock‑enable or divider logic you need. You can also assume that a sevenSegment module exists that takes a 4 bit input and outputs the 7 segments.
+
+
+
+### Response
+
+
+The monolithic prompt in my opinion performed better than the decomposed prompt. It was simpilier and it showed no synthesized errors. The design was easy to follow sometimes, but other times it kind of just threw code together to make it "simplier" but in a sense it made it more complicated. One such example of this is below: 
+
+                    detected_key = get_key_code(2'b00, row_in[1:0] == 2'b11 ? (row_in[3:2] == 2'b11 ? 2'b11 : 2'b10) :
+                                                                              (row_in[1] ? 2'b01 : 2'b00));
+
+The decomposed prompt had a better flow in a sense that the modules were seperated. It only fell short because it initiated the wrong clock when running the last prompt. 
+
+Error	35901063	Synthesis	ERROR <35901063> - c:/users/drgonzales/e155-lab1-main/fpga/src/lab3/lab3/source/impl_1/ai1.sv(24): instantiating unknown module SB_HFOSC. VERI-1063 [ai1.sv:24]
+
+Above shows the error that was thrown back from Radiant when synthesizing. The modulization created from the first prompt was relativiely good. Like i said earlier it was simplier, and with no explicit instruction, it did pretty well. 
+
+There was no new state or nextstae idioms in the code. They initialized the states as I would for an FSM. Here is an example: 
+
+   // FSM states
+    typedef enum logic [1:0] {
+        IDLE        = 2'b00,  // No key pressed, ready for new key
+        DEBOUNCE    = 2'b01,  // Key detected, debouncing
+        KEY_HELD    = 2'b10,  // Key confirmed and held
+        RELEASE     = 2'b11   // Waiting for key release
+    } state_t;
+
+
+When using an LLM for my workflow again, I would kind of do both of these methods. I would want it simpler for me to understand, however I would want it to seperate like it did in the second prompt  
+

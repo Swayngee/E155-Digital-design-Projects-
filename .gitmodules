@@ -1,0 +1,3 @@
+[submodule "hmc-e155-portfolio/project"]
+	path = hmc-e155-portfolio/project
+	url = https://github.com/eoinoconnell04/E155-Project.git

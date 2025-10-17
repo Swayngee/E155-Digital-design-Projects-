@@ -25,8 +25,11 @@ website:
             href: labs/lab6.qmd
           - text: Lab7
             href: labs/lab7.qmd
+      - text: Project Proposal
+        href: project.qmd
       - text: Resources
         href: resources.qmd
+      
 format:
   html:
     theme:
