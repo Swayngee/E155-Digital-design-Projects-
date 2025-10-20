@@ -134,6 +134,10 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
+    <a class="nav-link" href="../project.html"> 
+<span class="menu-text">Project Proposal</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../resources.html"> 
 <span class="menu-text">Resources</span></a>
   </li>  
@@ -311,7 +315,7 @@ ul.task-list li input[type="checkbox"] {
 <p>t (latency) = 12/ CPU freq = 0.15 μs</p>
 <p>Using our f we can find the max speed:</p>
 <p>1/t = 6,666,666 Hz</p>
-<p>speed(max) = f / 816 = 8169.9 rev /s</p>
+<p>speed(max) = f edges/s / 816 edges/rev = 8169.9 rev /s</p>
 <p>Thus, compared to polling, interrupts significantly reduce CPU usage while providing near-instantaneous response to encoder events.</p>
 <p>At higher speeds the encoder can generate edges faster than the polling loop can check them. Thus, some edges may be missed because the CPU hasn’t completed the current loop iteration. However when running interrupts they are event-driven, so each encoder edge triggers the ISR immediately, regardless of overall motor speed.</p>
 <p>Below is a summary table of the mathematical differences between the two.</p>

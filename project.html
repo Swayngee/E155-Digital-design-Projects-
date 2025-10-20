@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-30">
+<meta name="author" content="Drake Gonzales &amp; Eoin O’Connell">
 
-<title>lab4 – E155 portfolio</title>
+<title>Project: Real Time Stereo 3-Band EQ Filtering – E155 portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,23 +24,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-42c556fe1a289823da7f919bab4d1b2a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c1fac2584b48ed01fb6e278e36375074.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,8 +69,37 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -80,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">E155 portfolio</span>
     </a>
   </div>
@@ -91,11 +120,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../blog.html"> 
+    <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -104,41 +133,41 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-labs">    
         <li>
-    <a class="dropdown-item" href="../labs/lab1.html">
+    <a class="dropdown-item" href="./labs/lab1.html">
  <span class="dropdown-text">Lab1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab2.html">
+    <a class="dropdown-item" href="./labs/lab2.html">
  <span class="dropdown-text">Lab2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab3.html">
+    <a class="dropdown-item" href="./labs/lab3.html">
  <span class="dropdown-text">Lab3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab4.html">
+    <a class="dropdown-item" href="./labs/lab4.html">
  <span class="dropdown-text">Lab4</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab5.html">
+    <a class="dropdown-item" href="./labs/lab5.html">
  <span class="dropdown-text">Lab5</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab6.html">
+    <a class="dropdown-item" href="./labs/lab6.html">
  <span class="dropdown-text">Lab6</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab7.html">
+    <a class="dropdown-item" href="./labs/lab7.html">
  <span class="dropdown-text">Lab7</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../project.html"> 
+    <a class="nav-link active" href="./project.html" aria-current="page"> 
 <span class="menu-text">Project Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resources.html"> 
+    <a class="nav-link" href="./resources.html"> 
 <span class="menu-text">Resources</span></a>
   </li>  
 </ul>
@@ -157,16 +186,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#lab-4-digital-audio" id="toc-lab-4-digital-audio" class="nav-link active" data-scroll-target="#lab-4-digital-audio">Lab 4 Digital Audio</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
+  <li><a href="#project-proposal" id="toc-project-proposal" class="nav-link active" data-scroll-target="#project-proposal">Project Proposal</a>
   <ul class="collapse">
-  <li><a href="#equations" id="toc-equations" class="nav-link" data-scroll-target="#equations">Equations</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#functional-specifications" id="toc-functional-specifications" class="nav-link" data-scroll-target="#functional-specifications">Functional Specifications</a></li>
+  <li><a href="#system-partitioning" id="toc-system-partitioning" class="nav-link" data-scroll-target="#system-partitioning">System Partitioning</a></li>
+  <li><a href="#analog-to-digital-converter-adc-responsibilities" id="toc-analog-to-digital-converter-adc-responsibilities" class="nav-link" data-scroll-target="#analog-to-digital-converter-adc-responsibilities"><strong>Analog to Digital Converter (ADC) Responsibilities</strong></a></li>
+  <li><a href="#digital-to-analog-converter-dac-responsibilities" id="toc-digital-to-analog-converter-dac-responsibilities" class="nav-link" data-scroll-target="#digital-to-analog-converter-dac-responsibilities"><strong>Digital to Analog Converter (DAC) Responsibilities</strong></a></li>
+  <li><a href="#risks-for-project" id="toc-risks-for-project" class="nav-link" data-scroll-target="#risks-for-project"><strong>Risks for project</strong></a></li>
+  <li><a href="#hardware-components" id="toc-hardware-components" class="nav-link" data-scroll-target="#hardware-components">Hardware Components</a></li>
+  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
+  <li><a href="#performance-calculations" id="toc-performance-calculations" class="nav-link" data-scroll-target="#performance-calculations">Performance Calculations</a></li>
+  <li><a href="#project-timeline-and-task-division" id="toc-project-timeline-and-task-division" class="nav-link" data-scroll-target="#project-timeline-and-task-division">Project Timeline and Task Division</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions">Suggestions</a></li>
-  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">Ai prototype</a></li>
   </ul>
 </nav>
     </div>
@@ -175,22 +207,20 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-  <div class="quarto-categories">
-    <div class="quarto-category">labreport</div>
-  </div>
-  </div>
+<h1 class="title">Project: Real Time Stereo 3-Band EQ Filtering</h1>
+</div>
 
 
 
 <div class="quarto-title-meta">
 
-    
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 30, 2025</p>
-    </div>
+             <p>Drake Gonzales &amp; Eoin O’Connell </p>
+          </div>
   </div>
+    
   
     
   </div>
@@ -200,105 +230,249 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="lab-4-digital-audio" class="level2">
-<h2 class="anchored" data-anchor-id="lab-4-digital-audio">Lab 4 Digital Audio</h2>
-</section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this lab, a design was made to use a microcontroller, its respective timers, clk and GPIO pins, to play music. Two timers were incorporated into this design. TIM16 was used as a PWM source to create an output square wave, and TIM7 was used as a delay timer. The clk used for the TIM16 design was the PLL, which was initialized by the MSI (4MHZ). For TIM7, the MSI(4Hz) clk was used in a direct connection.</p>
-<p>The design was developed using C on SEGGER, and implemented on an STM32L432KC Microcontroller.</p>
-</section>
-<section id="technical-documentation" class="level2">
-<h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
-<p>The source code for this lab can be found in this <a href="https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab4">GitHub repo</a>.</p>
-<p>The documentation for the STM32L432KC manual <a href="https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf">Github link</a>.</p>
-<section id="equations" class="level3">
-<h3 class="anchored" data-anchor-id="equations">Equations</h3>
-<p>To be able to control the timer’s correctly, the design implemented sets internal prescalars which slows down the clock to be able to control the output minimum and maximum, frequency and duration.</p>
-<p>To perform this function, the design must first set the correct internal oscillator on, in this case it was the MSI clk. This clock oscillates at 4 MHz.</p>
-<p>To step down this clk for the wide range of frequency’s (0 to ~1500 Hz) and duration (0 to 500 ms) for this lab a correct prescalar must be set for each timer.</p>
-<section id="tim7---delay-timer" class="level4">
-<h4 class="anchored" data-anchor-id="tim7---delay-timer">TIM7 - delay timer</h4>
-<p>For timer7 (a basic timer), a prescaler of 39 was chosen to stepdown the MSI clk to 100 kHz. To calculate the minimum duration we take the clock rate that we dropped to 100kHz, and invert it to find the time. 1/100Khz = 10 µs per count. We then use the equation 100*ms - 1; to determine our ARR value.</p>
-<p>Minimum delay - The input frequency must be above 1 to prevent the underflow of bits. (100 * (0)-1) = -1. Maximum delay - The input frequency must be below the max value from our ARR * 100, which is m &lt;= 655.36ms.</p>
-</section>
-<section id="tim16---pwm-timer" class="level4">
-<h4 class="anchored" data-anchor-id="tim16---pwm-timer">TIM16 - PWM timer</h4>
-<p>For timer16 (a General-Purpose timer), a prescalar value of 3 was chosen to stepdown the PLL input clock to 1Mhz. Maximum freq - 1Mhz, which is out input frequency, although this value will unlikely sound. Minimum freq - Fmin = 1,000,000/ 65536 (the highest ARR) = 15.258789&nbsp;Hz</p>
+<section id="project-proposal" class="level2">
+<h2 class="anchored" data-anchor-id="project-proposal">Project Proposal</h2>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+<p>We will create a <strong>real-time 3-band equalizer (EQ)</strong> that can independently remove or boost lows, mids, and highs in an incoming stereo audio signal. The system will feature <strong>three control knobs</strong>, one for each frequency range.</p>
+<p>The project will accept audio through a <strong>standard 1/8-inch (3.5 mm) auxiliary input</strong>, allowing playback from a computer or mobile device. The analog audio signal will be digitized by an <strong>ADC</strong>, processed in real time by an <strong>FPGA</strong> using digital filtering, and then converted back to analog via a <strong>DAC</strong> for playback through a pair of speakers (left and right).</p>
+<p>The design is going to be developed and implemented on an STM32L432KC Microcontroller, and an iCE40 UltraPlus FPGA.</p>
 <hr>
-<p>For 1% spec:</p>
-<p>The formula is:</p>
-<p>input frq clkfreq = 1,000,000 tickperiod = psc/clkfreq</p>
-<p>ARR -&gt; (clkfreq/((psc+1)*frq))-1</p>
-<p>T -&gt; ARR * tickperiod</p>
-<p>f(output) = 1/T</p>
-<p>To calculate the 1% spec I ran a frequency through my equation, and found the output frequency. Each of which were within the 1% frequency spec.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/screenshotttt.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 1: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
-</figure>
-</div>
-<p>Above is a spreadsheet representation of the inputs and outputs of my equation.</p>
-<p>To verify such we test on an oscilliscope:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/freq1percent.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
-</figure>
-</div>
-<p>Above in the left hand bottom corner you can see the measured frequency is 263Hz. This occured at the 11th cord, which was 264Hz. This measured frequency is 1% of the actual frequency.</p>
-<p><strong>Wiring Schematic</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/lab4micropschematic.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 3: This schematic shows the wiring and components between our dev board, the 7-segment display, and the keypad.</figcaption>
-</figure>
-</div>
-<p>Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design.</p>
+</section>
+<section id="functional-specifications" class="level3">
+<h3 class="anchored" data-anchor-id="functional-specifications">Functional Specifications</h3>
+<ul class="task-list">
+<li><p><label><input type="checkbox"><strong>Input / Output</strong>:<br>
+Audio is input via a 1/8-inch aux cable and output through a speaker in the digital lab.</label></p></li>
+<li><p><label><input type="checkbox"><strong>Bypass Behavior</strong>:<br>
+When all EQ knobs are in their default (neutral) positions, the output should closely match the original input audio.</label></p></li>
+<li><p><label><input type="checkbox"><strong>Frequency Bands</strong>:<br>
+The equalizer will feature three independently adjustable bands:</label></p>
+<ul>
+<li><strong>Low band:</strong> ~100 Hz – 400 Hz<br>
+</li>
+<li><strong>Mid band:</strong> ~400 Hz – 2 kHz<br>
+</li>
+<li><strong>High band:</strong> ~2 kHz – 8 kHz</li>
+</ul></li>
+<li><p><label><input type="checkbox"><strong>Control Interface:</strong><br>
+Each band will have its own <strong>potentiometer</strong> for analog gain adjustment (boost/cut).</label></p></li>
+<li><p><label><input type="checkbox"><strong>Latency:</strong><br>
+The system will maintain real-time operation with <strong>&lt; 50 ms latency</strong>, ensuring audio remains synchronized with video sources such as YouTube.</label></p></li>
+<li><p><label><input type="checkbox"><strong>Filtering Performance:</strong><br>
+Each EQ band must correctly boost or attenuate its designated frequency range without introducing distortion or unintended interaction between bands. The correctness of filtering behavior will be verified through both frequency response measurements and subjective listening (ear tests).</label></p></li>
+<li><p><label><input type="checkbox"><strong>Verification:</strong><br>
+The final report will include theoretical frequency responses for each band and confirm them via hardware measurements.</label></p></li>
+</ul>
+<hr>
+</section>
+<section id="system-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="system-partitioning">System Partitioning</h3>
+<section id="fpga-responsibilities" class="level4">
+<h4 class="anchored" data-anchor-id="fpga-responsibilities"><strong>FPGA Responsibilities</strong></h4>
+<ul>
+<li>Perform real-time <strong>IIR-based filtering</strong> for the three EQ bands.</li>
+<li>Handle <strong>I²S communication</strong> with both ADC and DAC devices.</li>
+<li>Generate appropriate <strong>clock signals</strong> using internal oscillators (HSOSC or LFOSC).</li>
+</ul>
+</section>
+<section id="mcu-responsibilities" class="level4">
+<h4 class="anchored" data-anchor-id="mcu-responsibilities"><strong>MCU Responsibilities</strong></h4>
+<ul>
+<li>Read <strong>three analog potentiometer inputs</strong> (one per frequency band).</li>
+<li>Compute <strong>IIR filter coefficients</strong> based on knob positions.</li>
+<li>Transmit updated coefficients to the FPGA via <strong>SPI</strong>.</li>
+</ul>
 </section>
 </section>
+<section id="analog-to-digital-converter-adc-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="analog-to-digital-converter-adc-responsibilities"><strong>Analog to Digital Converter (ADC) Responsibilities</strong></h3>
+<ul>
+<li>Convert analog data to digital data</li>
+<li>Communicate over I2S protocol</li>
+</ul>
 </section>
-<section id="results-and-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<p>To find each step to configure each timer and its respective registers, the STM32L432 reference manual was used.</p>
-<p>The steps taken for this lab were:</p>
-<p>Create pointers for each register inside each timer Initialize TIM16 and configure the PWM mode Link TIM6 to the MSI, and create a counter-up delay Combine these functions and run them inside the main file.</p>
-<p>An example of one of these steps from the datasheet can be seen below.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/PWMmode.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: PWM mode for TIM16</figcaption>
-</figure>
-</div>
-<p>Above is sections 28.510 of the reference manual. It describes how to set up the TIM15 and TIM16 PWM mode by showing what registers to enable or what bits to put in different registers.</p>
-<p>The design uploaded to the STM32 was a success. It sucessfully produced Fur Elise, and another composition of my choice, which was te first few initial chrods of Thunderstruck by AC/DC.</p>
+<section id="digital-to-analog-converter-dac-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="digital-to-analog-converter-dac-responsibilities"><strong>Digital to Analog Converter (DAC) Responsibilities</strong></h3>
+<ul>
+<li>Convert digital data to analog data</li>
+<li>Communicate over I2S protocol</li>
+</ul>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The design was a success. Each note was played at the correct frequency (measured by the oscilliscope), and correctly delayed each PWM signal by the amount specified. Each notes volume was also controlled by a potentiometer. A seperate composition was created and worked as intended as well. This lab taught the importance of datasheets, registers, bit-wise functions, and header files. That being said it also taught the importance of knowing which CMSIS folders to use when using a new microcontroller.</p>
-<p>This Lab took 15 hours.</p>
+<section id="risks-for-project" class="level3">
+<h3 class="anchored" data-anchor-id="risks-for-project"><strong>Risks for project</strong></h3>
+<ul>
+<li>End-to-end latency (ADC → FPGA processing → DAC) or buffering delays cause audible lag, clicking, or make the system unusable for live monitoring.</li>
+<li>Making the ADC, DAC, MCU and FPGA clocks not synchronized</li>
+<li>Increased quantization noise from using 16-bit data paths</li>
+<li>High-frequency content aliasing into the audio band if the ADC sample rate or analog filter are insufficient.</li>
+<li>Incorrect wiring between components</li>
+<li>Output clipping at high volume damaging speakers or hearing.</li>
+<li>Exceeding FPGA LUT’s, and more importantly, <strong>DSP slices</strong></li>
+<li><ul>
+<li>Our FPGA Contains only 8 16x16 DSP slices, requiring clever pipelining and multiplexing to filter all signals in time</li>
+</ul></li>
+</ul>
+<hr>
 </section>
-<section id="suggestions" class="level2">
-<h2 class="anchored" data-anchor-id="suggestions">Suggestions</h2>
-<p>To, in future labs, better understand the differences in each clock, and understand what the benefits of using each other are. I also want to better understand the specific hardware that drives these clocks.</p>
+<section id="hardware-components" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-components">Hardware Components</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Quantity</th>
+<th>Function</th>
+<th>Interface</th>
+<th>Approx. Cost</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://www.digikey.com/en/products/detail/adafruit-industries-llc/6250/26249971"><strong>Adafruit PCM5102 I²S DAC</strong></a></td>
+<td>1</td>
+<td>Digital-to-Analog Converter</td>
+<td>I²S</td>
+<td>~$6</td>
+<td>16–32 bit, 8–384 kHz sampling, 3.3V logic, 2.1 V-rms output</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.amazon.com/PCM1808-Single-Ended-Analog-Input-Decoder-Amplifier/dp/B0D9LNGBD1/ref=sr_1_2?crid=36BETC5DF3MKP&amp;dib=eyJ2IjoiMSJ9.nlR0qPjoFMWLXWvcVm5knddFFm91uZHicUMUQt7fQD2tq6s6qm5W_n4pyBM6xX-trNWgHX6ewn1atXHg6hRTejlrJI4auPOkpfjZueUFzJ0HZSB1_9DcHHzd51PVCwachjMeg7oem3HzbDuk_DUKRi_Ou52n5owbxklLTIAMG7AehH1ymr8ug4BEVaRgoWhk7Gr5YJGwMOrE1Mv-jY4hdG5l_VchhpsW65TVBDcg-eXAThgxDyTGwFhXx4VQ6AGPKSC5HkG-lvhaMzcYhnWzVMCcgTSM6joVPOTBo1RBNyI.Pa8c9lwcgTzKRZBqkcgd8nNLlCZvq8dwTe9jsdVm5MM&amp;dib_tag=se&amp;keywords=PCM1802&amp;qid=1760390332&amp;s=industrial&amp;sprefix=%2Cindustrial%2C356&amp;sr=1-2"><strong>PCM1808 ADC</strong></a></td>
+<td>1</td>
+<td>Analog-to-Digital Converter</td>
+<td>I²S</td>
+<td>~$6</td>
+<td>24-bit, 8–96 kHz sampling, 3.3–5V supply</td>
+</tr>
+<tr class="odd">
+<td><a href="https://www.digikey.com/en/products/detail/kycon-inc/STX-3000/9975995"><strong>STX-3000 Audio Jack</strong></a></td>
+<td>1</td>
+<td>Stereo audio input connector</td>
+<td>Analog</td>
+<td>~$1</td>
+<td>3.5 mm TRS jack, through-hole and breadboard compatible</td>
+</tr>
+<tr class="even">
+<td><strong>3362 1/4-inch Square Trimpot Potentiometers</strong></td>
+<td>3</td>
+<td>User control for low, mid, and high bands</td>
+<td>Analog</td>
+<td>Stockroom</td>
+<td>Reads by MCU ADC pins</td>
+</tr>
+<tr class="odd">
+<td><strong>ICE40 UltraPlus FPGA Board</strong></td>
+<td>1</td>
+<td>Real-time DSP core</td>
+<td>I²C, SPI</td>
+<td>On Hand</td>
+<td>Performs all filtering</td>
+</tr>
+<tr class="even">
+<td><strong>STM32L432KC MCU Board</strong></td>
+<td>1</td>
+<td>User interface and coefficient computation</td>
+<td>SPI, ADC</td>
+<td>On Hand</td>
+<td>Communicates with FPGA</td>
+</tr>
+<tr class="odd">
+<td><strong>Miscellaneous Components</strong></td>
+<td>n/a</td>
+<td>Op-amps, resistors, capacitors, wires</td>
+<td>Analog</td>
+<td>Stockroom</td>
+<td>Used for signal conditioning, biasing, and connections</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Subtotal parts cost:</strong> ~<strong>$13</strong> (excluding lab stock components).</p>
+<p><strong>Shipping and Taxes:</strong> ~<strong>$8</strong></p>
+<p><strong>Total external parts cost:</strong> ~<strong>$21</strong>.</p>
+<hr>
 </section>
-<section id="ai-prototype" class="level2">
-<h2 class="anchored" data-anchor-id="ai-prototype">Ai prototype</h2>
-<p>Here is the AI prototype for this lab. Posted below is the prompt that was plugged into Claude AI:</p>
-<p>What timers should I use on the STM32L432KC to generate frequencies ranging from 220Hz to 1kHz? What’s the best choice of timer if I want to easily connect it to a GPIO pin? What formulae are relevant, and what registers need to be set to configure them properly?</p>
-<p>The output (part):</p>
-<p>Why TIM2 is Optimal TIM2 is a 32-bit general-purpose timer that offers several advantages:</p>
-<p>PWM output capability - can directly drive GPIO pins 32-bit resolution - provides fine frequency control Multiple output channels - TIM2_CH1 through TIM2_CH4 Easy GPIO connection - dedicated timer output pins</p>
-<p>Basic Configuration Sequence</p>
-<p>Enable timer clock in RCC_APB1ENR1 Configure GPIO for alternate function (AF1 for TIM2) Set prescaler and auto-reload values Configure PWM mode in CCMRx register Enable channel output in CCER register Set duty cycle in CCRx register Start timer by setting CEN bit</p>
-<p>The Ai wanted me to use the TIM2 timer which is a good timer to use for the PWM output. It then gave me steps on how to set it up using the correct registers from the manul. The output from the model did not change when I also uploaded the reference manual for reference. However, the output did get more specific and gave me more direct code for the design:</p>
-<p>// Enable GPIOA clock RCC-&gt;AHB2ENR |= RCC_AHB2ENR_GPIOAEN;</p>
-<p>// Configure PA0 as alternate function (TIM2_CH1) GPIOA-&gt;MODER &amp;= ~(0x3 &lt;&lt; 0); GPIOA-&gt;MODER |= (0x2 &lt;&lt; 0); // Alternate function mode</p>
-<p>// Set alternate function 1 for TIM2 GPIOA-&gt;AFR[0] &amp;= ~(0xF &lt;&lt; 0); GPIOA-&gt;AFR[0] |= (0x1 &lt;&lt; 0); // AF1 for TIM2</p>
-<p>Overall this LLM was super fast (took about 5s to respond), andd it gave an accurate answer when it comes to specific registers and bit-wise functions. The LLM also generated code for the GPIO pins, which was very similar to the GPIO header file that was provided this lab. TIM 15 and 16 are the timers that I used due to them being more versatile in future designs. Overall, I belive the LLM did excellent in C and microcontroller design.</p>
+<section id="block-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
+<img src="flow_chart.png" class="img-fluid">
+<figcaption>
+Figure 1: Flow Chart of Partitioning and Connections.
+</figcaption>
+</section>
+<section id="performance-calculations" class="level3">
+<h3 class="anchored" data-anchor-id="performance-calculations">Performance Calculations</h3>
+<p>The key performance characteristics of our EQ filter are defined by the sampling rate, ADC/DAC bit rate, and FPGA processing speed.</p>
+<p><strong>Sampling Rate / Nyquist:</strong><br>
+By the Shannon–Nyquist theorem, the sampling frequency must exceed twice the highest signal frequency. Since the human ear can hear to around ~20 kHz, <span class="math inline">\(f_s &gt; 40\,\text{kHz}\)</span>.<br>
+We will use <strong>48 kHz</strong>, providing a 24 kHz Nyquist limit and headroom for filtering.</p>
+<p><strong>Bit Rate:</strong><br>
+At 48 kHz, 24 bits/sample, and stereo audio:</p>
+<p><span class="math display">\[
+R = f_s \times B \times C = 48{,}000 \times 24 \times 2 \approx 2.3\,\text{Mbps}
+\]</span></p>
+<p>With 32-bit I²S frames, the bit clock is approximately <strong>3 MHz</strong>, easily handled by the FPGA.</p>
+<p><strong>FPGA Throughput and Latency:</strong><br>
+Assuming a 48 kHz sample rate (sample period ≈ 20.83 µs), a 50 MHz fabric clock gives</p>
+<p><span class="math display">\[
+\frac{50\ \text{MHz}}{48\ \text{kHz}} \approx 1042
+\]</span></p>
+<p>cycles per sample, which is more than sufficient for three IIR filters using time-multiplexed multiplies. If the ADC and DAC run from the same sample clock and we complete filtering within one sample period, the per-sample processing latency is about 20.8 µs (<span class="math inline">\(\frac{1}{f_{ADC/DAC}}\)</span>). The ADC/DAC and any pipelining typically add only a few samples of delay (on the order of tens of microseconds). Even with conservative buffering, end-to-end latency remains <strong>≪ 50 ms</strong>, easily meeting our real-time requirement.</p>
+<p><strong>Resolution / Noise:</strong><br>
+24-bit audio provides ~146 dB theoretical SNR; internal 32-bit accumulation will preserve precision and avoid quantization noise.</p>
+<p>Overall, the design easily meets real-time performance needs: 48 kHz sample rate, &lt;1 ms latency, and sufficient precision for transparent audio quality.</p>
+<p><strong>LUT Usage</strong></p>
+<p>Because the filtering is duplicated, we duplicate the filtering hardware. The 3-band EQ consists of 3 cascading filters (low, mid, high), with each band using biquads. That means that we do <span class="math inline">\(3 x 5 = 15\)</span> multiplies per sample. These are 16 bit multiples, and the FPGA has 8 16x16 DSP slices. That means that as long as we run the FPGA at least 1.875 times the sampling frequency of the ADC/DAC then we can fit in all the multiplies. For a sampling rate of 48 KHz, this will be easy as the FGPA can run on order of MHz.</p>
+</section>
+<section id="project-timeline-and-task-division" class="level3">
+<h3 class="anchored" data-anchor-id="project-timeline-and-task-division">Project Timeline and Task Division</h3>
+<p>The table below outlines the major project milestones, their target completion dates, and the team member responsible for leading each task. Tasks are ordered chronologically to ensure smooth integration of the hardware and firmware components leading up to a functional prototype.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Goal Date</th>
+<th>Lead Member</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Order parts (after project approval)</td>
+<td>As soon as approved</td>
+<td>Drake</td>
+</tr>
+<tr class="even">
+<td>Successfully throughput unfiltered audio</td>
+<td>11/10</td>
+<td>Drake</td>
+</tr>
+<tr class="odd">
+<td>Successfully demo filtering in MATLAB</td>
+<td>11/10</td>
+<td>Eoin</td>
+</tr>
+<tr class="even">
+<td>Successfully measure potentiometer input on MCU</td>
+<td>11/17</td>
+<td>Drake</td>
+</tr>
+<tr class="odd">
+<td>Finish RTL design and verification via test benches</td>
+<td>11/17</td>
+<td>Eoin</td>
+</tr>
+<tr class="even">
+<td>Complete and test working prototype</td>
+<td>11/24</td>
+<td>Whole Team</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Task Division:</strong><br>
+Drake will primarily focus on the hardware integration side of the project, including part procurement, audio signal interfacing, and MCU testing. Eoin will lead the digital signal processing implementation, including MATLAB filter validation and FPGA RTL design with test benches. Both team members will collaborate closely in the final integration and prototype testing phase to ensure seamless hardware–software coordination and successful real-time operation.</p>
+<p>As the project progresses, we will monitor our progress and reallocate tasks as needed to ensure balanced workloads and timely completion. Work will be tracked through a shared action-items spreadsheet. Additionally, we both aim to maintain a complete understanding of the entire system, ensuring that each of us can independently explain and reproduce every part of the project.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
