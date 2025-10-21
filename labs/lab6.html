@@ -162,11 +162,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
   <li><a href="#equations" id="toc-equations" class="nav-link" data-scroll-target="#equations">Equations</a></li>
+  <li><a href="#example-ds1722-register-address" id="toc-example-ds1722-register-address" class="nav-link" data-scroll-target="#example-ds1722-register-address">Example DS1722 Register Address</a></li>
   </ul></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions">Suggestions</a></li>
-  <li><a href="#ai-prototype" id="toc-ai-prototype" class="nav-link" data-scroll-target="#ai-prototype">Ai prototype</a></li>
   </ul>
 </nav>
     </div>
@@ -217,22 +217,31 @@ ul.task-list li input[type="checkbox"] {
 <section id="equations" class="level3">
 <h3 class="anchored" data-anchor-id="equations">Equations</h3>
 <p>There were no equations used for this lab.</p>
-<section id="logic-analyzer" class="level4">
-<h4 class="anchored" data-anchor-id="logic-analyzer">Logic Analyzer</h4>
 </section>
-<section id="printed-temperature-values" class="level4">
-<h4 class="anchored" data-anchor-id="printed-temperature-values">Printed Temperature Values</h4>
+<section id="example-ds1722-register-address" class="level3">
+<h3 class="anchored" data-anchor-id="example-ds1722-register-address">Example DS1722 Register Address</h3>
+<p>To be able to control the resolution of the tempertaure sensor, the user must look at the datasheet and write and read from the correct registers. Along with this, Proper modes and enabling bits also need to be written to ensure synchronization.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/lab4micropschematic.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 2: Below is an example of the output from the website</figcaption>
+<p><img src="../images/Registeradd.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Below is the register map for the DS1722</figcaption>
 </figure>
 </div>
+<section id="logic-analyzer" class="level4">
+<h4 class="anchored" data-anchor-id="logic-analyzer">Logic Analyzer</h4>
+<p>This overall design was tested using the Logic Analyzer option on an Oscilliscope. This function performs the same as the FPGA waveforms that we have seen in previous labs. It portrays all essential parts of the SPI protocol, which include the clock, enabler, MISO and MOSI.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/DS1Z_QuickPrint2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Above is the Logic Analyzer for this design</figcaption>
+</figure>
+</div>
+<p>Above are clearly shown the enabler(D9), the clock(D10), MISO(D11), and MOSI(D12). On the bottom we can see the clear outputs from the MOSI and MISO. On the MISO wave, first see the sensor waiting for an input read/write. Once this first instruction is sent from MOSI (226), which is the starting resolution, we see dont see an output in MISO because we are writing. However once we read the LSB and MSB registers as shown in MOSI, the MISO changes accordingly to show the output value of 24.218, which is around what we expected around room temperature.</p>
 <p><strong>Wiring Schematic</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/lab4micropschematic.jpg" class="img-fluid figure-img"></p>
-<figcaption>Figure 3: This schematic shows the wiring and components between our dev board, the ESP8266, the DS1722, and the onboard LED</figcaption>
+<p><img src="../images/schematiclab6.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: This schematic shows the wiring and components between our dev board, the ESP8266, the DS1722, and the onboard LED</figcaption>
 </figure>
 </div>
 <p>Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design.</p>
@@ -241,6 +250,14 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
+<p><strong>Printed Temperature Values</strong></p>
+<p>For this lab, a website was created to be able to toggle an LED on and off, and control the resolution of a tempertaure sensor, the output of the seen can be seen below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/lab6wp.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Below is an example of the output from the website</figcaption>
+</figure>
+</div>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
@@ -249,11 +266,116 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="suggestions" class="level2">
 <h2 class="anchored" data-anchor-id="suggestions">Suggestions</h2>
-<p>To, in future labs, better understand the SPI interface beforehand and understand how it compares to other communication protocols such as I2C.</p>
-</section>
-<section id="ai-prototype" class="level2">
-<h2 class="anchored" data-anchor-id="ai-prototype">Ai prototype</h2>
-<p>Here is the AI prototype for this lab. Posted below is the prompt that was plugged into Claude AI:</p>
+<p>To, in future labs, better understand the SPI interface beforehand and understand how it compares to other communication protocols such as I2C or I2S.</p>
+<p>This lab took me 15 hours. ## Ai prototype Here is the AI prototype for this lab. Posted below is the prompt that was plugged into Claude AI: 1. I’m making a web portal to interface with a temperature sensor. Create a HTML page that looks good and is intuitive to show the temperature, control an LED, and change the precision of the readout.</p>
+<p>Below is the output from the LLM.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/claude.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: HDML website created by Claude</figcaption>
+</figure>
+</div>
+<p>The LLM did not output any code.</p>
+<ol start="2" type="1">
+<li>Write me a C function to carry out a SPI transaction to retrieve a temperature reading from a DS1722 sensor. Make use of CMSIS libraries for the STM32L432KC.</li>
+</ol>
+<p>Output code:</p>
+<p>/** * DS1722 Temperature Sensor SPI Driver for STM32L432KC * Using CMSIS libraries */</p>
+<p>#include “stm32l4xx.h” #include &lt;stdint.h&gt;</p>
+<p>// DS1722 Register Addresses #define DS1722_REG_CONFIG 0x80 #define DS1722_REG_TEMP_LSB 0x01 #define DS1722_REG_TEMP_MSB 0x02</p>
+<p>// DS1722 Configuration bits #define DS1722_CONFIG_SHUTDOWN 0x01 #define DS1722_CONFIG_ONESHOT 0x10 #define DS1722_CONFIG_RES_8BIT 0x00 #define DS1722_CONFIG_RES_9BIT 0x02 #define DS1722_CONFIG_RES_10BIT 0x04 #define DS1722_CONFIG_RES_11BIT 0x06 #define DS1722_CONFIG_RES_12BIT 0x08</p>
+<p>// GPIO Configuration (adjust pins as needed) #define SPI_CS_PIN 4 // PA4 for CS #define SPI_SCK_PIN 5 // PA5 for SCK #define SPI_MISO_PIN 6 // PA6 for MISO #define SPI_MOSI_PIN 7 // PA7 for MOSI</p>
+<p>/** * Initialize SPI1 peripheral for DS1722 communication * Assumes system clock is already configured */ void DS1722_SPI_Init(void) { // Enable clocks for GPIOA and SPI1 RCC-&gt;AHB2ENR |= RCC_AHB2ENR_GPIOAEN; RCC-&gt;APB2ENR |= RCC_APB2ENR_SPI1EN;</p>
+<pre><code>// Configure GPIO pins for SPI1 (PA5=SCK, PA6=MISO, PA7=MOSI)
+// Set alternate function mode (AF5 for SPI1)
+GPIOA-&gt;MODER &amp;= ~(GPIO_MODER_MODE5 | GPIO_MODER_MODE6 | GPIO_MODER_MODE7);
+GPIOA-&gt;MODER |= (GPIO_MODER_MODE5_1 | GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1);
+
+// Set alternate function AF5 (SPI1) for PA5, PA6, PA7
+GPIOA-&gt;AFR[0] &amp;= ~(GPIO_AFRL_AFSEL5 | GPIO_AFRL_AFSEL6 | GPIO_AFRL_AFSEL7);
+GPIOA-&gt;AFR[0] |= (5 &lt;&lt; GPIO_AFRL_AFSEL5_Pos) | 
+                 (5 &lt;&lt; GPIO_AFRL_AFSEL6_Pos) | 
+                 (5 &lt;&lt; GPIO_AFRL_AFSEL7_Pos);
+
+// Set high speed for SPI pins
+GPIOA-&gt;OSPEEDR |= (GPIO_OSPEEDR_OSPEED5 | GPIO_OSPEEDR_OSPEED6 | GPIO_OSPEEDR_OSPEED7);
+
+// Configure PA4 as CS (Chip Select) - output, push-pull
+GPIOA-&gt;MODER &amp;= ~GPIO_MODER_MODE4;
+GPIOA-&gt;MODER |= GPIO_MODER_MODE4_0;
+GPIOA-&gt;OTYPER &amp;= ~GPIO_OTYPER_OT4;
+GPIOA-&gt;OSPEEDR |= GPIO_OSPEEDR_OSPEED4;
+
+// Set CS high (inactive)
+GPIOA-&gt;BSRR = (1 &lt;&lt; SPI_CS_PIN);
+
+// Configure SPI1
+// Disable SPI for configuration
+SPI1-&gt;CR1 &amp;= ~SPI_CR1_SPE;
+
+// Configure SPI: Master mode, CPOL=0, CPHA=0, 8-bit data
+// Baud rate: fPCLK/16 (assuming 80MHz PCLK, this gives ~5MHz SPI clock)
+SPI1-&gt;CR1 = SPI_CR1_MSTR |           // Master mode
+            SPI_CR1_SSM |             // Software slave management
+            SPI_CR1_SSI |             // Internal slave select
+            (3 &lt;&lt; SPI_CR1_BR_Pos);    // Baud rate: fPCLK/16
+
+SPI1-&gt;CR2 = (7 &lt;&lt; SPI_CR2_DS_Pos) |  // 8-bit data size
+            SPI_CR2_FRXTH;            // RXFIFO threshold
+
+// Enable SPI
+SPI1-&gt;CR1 |= SPI_CR1_SPE;</code></pre>
+<p>}</p>
+<p>/** * Send/receive a single byte via SPI */ static uint8_t SPI_TransferByte(uint8_t data) { // Wait until TX buffer is empty while (!(SPI1-&gt;SR &amp; SPI_SR_TXE));</p>
+<pre><code>// Send data
+*(__IO uint8_t *)&amp;SPI1-&gt;DR = data;
+
+// Wait until RX buffer has data
+while (!(SPI1-&gt;SR &amp; SPI_SR_RXNE));
+
+// Read and return received data
+return *(__IO uint8_t *)&amp;SPI1-&gt;DR;</code></pre>
+<p>}</p>
+<p>/** * Assert CS (Chip Select) - pull low */ static inline void DS1722_CS_Low(void) { GPIOA-&gt;BSRR = (1 &lt;&lt; (SPI_CS_PIN + 16)); // Reset bit }</p>
+<p>/** * Deassert CS (Chip Select) - pull high */ static inline void DS1722_CS_High(void) { GPIOA-&gt;BSRR = (1 &lt;&lt; SPI_CS_PIN); // Set bit }</p>
+<p>/** * Write to DS1722 register */ void DS1722_WriteRegister(uint8_t reg, uint8_t value) { DS1722_CS_Low(); SPI_TransferByte(reg); // Send register address SPI_TransferByte(value); // Send data DS1722_CS_High(); }</p>
+<p>/** * Read from DS1722 register */ uint8_t DS1722_ReadRegister(uint8_t reg) { uint8_t value;</p>
+<pre><code>DS1722_CS_Low();
+SPI_TransferByte(reg);          // Send register address
+value = SPI_TransferByte(0x00); // Dummy byte to read data
+DS1722_CS_High();
+
+return value;</code></pre>
+<p>}</p>
+<p>/** * Configure DS1722 sensor * resolution: DS1722_CONFIG_RES_8BIT to DS1722_CONFIG_RES_12BIT */ void DS1722_Configure(uint8_t resolution) { // Write configuration: continuous conversion mode with specified resolution DS1722_WriteRegister(DS1722_REG_CONFIG, resolution); }</p>
+<p>/** * Simple delay function (approximate, not precise) <em>/ static void delay_ms(uint32_t ms) { // Assumes 80MHz system clock, adjust as needed for (uint32_t i = 0; i &lt; ms </em> 8000; i++) { __NOP(); } }</p>
+<p>/** * Read temperature from DS1722 sensor * Returns temperature in degrees Celsius as a float * * The DS1722 stores temperature in two registers: * - MSB: Integer part (signed) * - LSB: Fractional part (upper bits) */ float DS1722_ReadTemperature(void) { int8_t temp_msb; uint8_t temp_lsb; float temperature;</p>
+<pre><code>// Read temperature registers
+temp_msb = (int8_t)DS1722_ReadRegister(DS1722_REG_TEMP_MSB);
+temp_lsb = DS1722_ReadRegister(DS1722_REG_TEMP_LSB);
+
+// Calculate temperature based on resolution
+// LSB bits represent fractional part: bit7=0.5, bit6=0.25, bit5=0.125, etc.
+temperature = (float)temp_msb;
+temperature += (temp_lsb &gt;&gt; 5) * 0.125f;  // Upper 3 bits for 12-bit resolution
+
+return temperature;</code></pre>
+<p>}</p>
+<p>/** * Initialize and read temperature from DS1722 * Example usage function */ float DS1722_GetTemperature(void) { static uint8_t initialized = 0;</p>
+<pre><code>// Initialize SPI and sensor on first call
+if (!initialized) {
+    DS1722_SPI_Init();
+    delay_ms(10);  // Wait for sensor to power up
+    DS1722_Configure(DS1722_CONFIG_RES_12BIT);  // 12-bit resolution
+    delay_ms(250); // Wait for first conversion (max 240ms for 12-bit)
+    initialized = 1;
+}
+
+// Read and return temperature
+return DS1722_ReadTemperature();</code></pre>
+<p>}</p>
+<p>Here are a few ideas of on what you might comment on:</p>
+<p>I think the Quality of both was really good. I liked the HTML page, however just based on glance without running I can tell that the code for the SPI and the sensor was wrong. This is due to the code saying that the sensor is active low, meaning it probably did not read the datasheet. This is what I noticed at first glance, and because you cannot switch the sensors hardware around, this code is faulty. Compared to my setup it was fine. My had the same idea hwoever it was just written completely differently. The SPI setup was around the same however. The LLLM chose an input clock of 5MHZ which is an acceptable range for the sensor, which can have inputs up to 10MHZ. The LLM works well for creating the initial idea and overall structure. But its code is faulty due to it not reading the datasheet correctly.</p>
 
 
 </section>
