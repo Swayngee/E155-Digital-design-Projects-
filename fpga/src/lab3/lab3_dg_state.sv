@@ -62,6 +62,7 @@ end
 
 // Next state Logic
 always_comb begin
+nextstate = state;
 case(state)
 	idle: begin 
 		if (pressed) nextstate <= waiter;
