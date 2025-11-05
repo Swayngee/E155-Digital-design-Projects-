@@ -1,9 +1,7 @@
-/////////////////////////////////////////////
-// aes_spi
-//   SPI interface.  Shifts in key and plaintext
-//   Captures ciphertext when done, then shifts it out
-//   Tricky cases to properly change sdo on negedge clk
-/////////////////////////////////////////////
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds logic to configure SPI
+// 11/03/25
 
 module aes_spi(input  logic sck, 
                input  logic sdi,

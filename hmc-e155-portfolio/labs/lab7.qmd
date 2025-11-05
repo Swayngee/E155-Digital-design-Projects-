@@ -1,5 +1,5 @@
 ---
-date: "12/01/25"
+date: "11/03/25"
 theme: solar
 categories:
   - labreport
@@ -9,5 +9,81 @@ draft: false
 
 ## Introduction
 
+In this lab, a design was made to use a microcontroller and an FPGA to implement the Advanced Encrypton Standard (AES). AES is a complicated method in which a message is encrypted and decrypted in a non-linear way. This is done such that messages/ communication as a whole can be done in secret. This standard has two inputs, a key, and a plaintext message, and outputs a done signal and a encrpted message. In this lab only the encryption was done, but the decryption can be done by completing the steps in opposite order. These steps include keyexpansion, switching the rows of the encryption message matrix, mixing the columns, and mixing in they expanded key every round. This standard is very complicating when it comes to ensuring clock signals line up, and inputs/outputs/enablers work as intended. 
+
+The design was developed using C on SEGGER, and implemented on an STM32L432KC Microcontroller. 
+
+## Technical Documentation 
+
+The source code for this lab can be found in this [GitHub repo](https://github.com/Swayngee/e155-lab1/tree/main/fpga/src/lab7).
+
+The documentation for the STM32L432KC manual [Github link](https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf).
+
+The documentation for the AES [Github link](https://hmc-e155.github.io/assets/doc/NIST.FIPS.197-upd1.pdf).
+
+## Equations
+
+There were no equations used for this lab. 
+
+## Testbenches
+
+Below are the testbecnhes completed for the core, and SPI modules for this design. These modules acted like a 'top' module for our design and tested the two sections within our design. The core represented the code written for the AES implementation and the Spi was the communication protocol used between the FPGA and the MC. Below is the core testbench:
+
+![Figure 1: Testbench showing all states / inputs and outputs of each state from the core module](../images/corelab7.jpg)
+
+Above portrays the Inputs and outputs from the fsm for the core module. 
+
+![Figure 2: Testbench showing the output from the core module](../images/coreresultlab7.jpg)
+
+Above is the expected and the actual values coming out from our Core module. This verified that our AES implementation was correct. The testbench was condensed to this version to compare results only. 
+
+![Figure 3: SPI testbench showing expected vs actual values](../images/SPIIIII.png)
+
+Above is the SPI testbench for lab 7. It shows the expected vs the actual and other signals useful for the transaction. 
+
+![Figure 4: Testbench for the subbytes module](../images/newbytes.png)
+
+Above is the testbench for the subbytes module.
+
+## Finite State Machines (FSM)
+
+![Figure 6: Schematic for the keyexpansion fsm](../images/keyexpfsm.jpg)
+
+![Figure 7: Schematic for the aesrounds fsm](../images/roundsfsm.jpg)
+
+## Wiring Schematic
+
+![Figure 6: This schematic shows the wiring and components between our dev board, the ESP8266, the DS1722, and the onboard LED](../images/schematiclab6.jpg)
+
+Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design. 
+
+
+## Results and Discussion
+
+**Logic Analyzer**
+
+For this lab, a website was created to be able to toggle an LED on and off, and control the resolution of a tempertaure sensor, the output of the seen can be seen below. 
+
+![Figure 4: Below is an example of the output from the website](../images/lab6wp.png)
+
+
+
+## Conclusion
+
+The design was a success. The microcontroller successfully was linked to the FPGA via SPI protocol, and the Advances Encryption Standard was implemented.  I correctly wrote systemverilog to create the AES, and completed testbenches to test my design. The result was also correctly recorded on an logic analyzer. 
+
+This Lab took 45 hours. 
+
+## Suggestions
+
+To better manage time when completing such a hard module. I spent a whole lot of time just writing the code at first, but I shouldve gone through each module, tested it, then gone to the next to ensure proper flow. Then in the top module just ensure/fix the timing results. 
+
+## Ai Prototype 
+
+This AI prototype was used with Claude, a code based AI. The first prompt can be seen below: 
+
+Write SystemVerilog HDL to implement the KeyExpansion logic described in the FIPS-197 uploaded document. The module should be purely combinational, using the previous key and current round number to calculate the next key. Assume other required modules (SubWord and RotWord) are already implemented.
+
+The output from the prompt:  
 
 

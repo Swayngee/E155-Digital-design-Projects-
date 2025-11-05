@@ -1,8 +1,10 @@
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds testbench for sbox
+// 11/03/25
+
 `timescale 10ns/1ns
-/////////////////////////////////////////////
-// testbench_aes_sbox
-// Demonstrates 1-cycle latency of RAM blocks doing s-box substitution
-/////////////////////////////////////////////
+
 
 module testbench_aes_sbox();
     logic clk, load, done, sck, sdi, sdo;

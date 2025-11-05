@@ -1,9 +1,7 @@
-/////////////////////////////////////////////
-// mixcolumn
-//   Perform Galois field operations on bytes in a column
-//   See EQ(4) from E. Ahmed et al, Lightweight Mix Columns Implementation for AES, AIC09
-//   for this hardware implementation
-/////////////////////////////////////////////
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds the mixcol module
+// 11/03/25
 
 module mixcolumn(input  logic [31:0] a,
                  input  logic  alarm,

@@ -1,12 +1,12 @@
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds the testbench to verify SPI coms
+// 11/03/25
+
 `timescale 10ns/1ns
-/////////////////////////////////////////////
-// testbench_aes_spi
-// Tests AES with cases from FIPS-197 appendix
-// Simulates full system with SPI load
-/////////////////////////////////////////////
 
 module testbench_aes_spi();
-    logic clk, load, done, sck, sdi, sdo;
+    logic int_osc, load, done, sck, sdi, sdo, reset;
     logic [127:0] key, plaintext, cyphertext, expected;
 		logic [255:0] comb;
     logic [8:0] i;
@@ -15,7 +15,7 @@ module testbench_aes_spi();
     logic delay;
     
     // device under test
-    aes dut(clk, sck, sdi, sdo, load, done);
+    aes dut(int_osc, sck, sdi, reset, sdo, load, done);
     
     // test case
     initial begin   
@@ -39,8 +39,8 @@ module testbench_aes_spi();
     
     // generate clock and load signals
 		always begin
-				clk = 1'b0; #5;
-				clk = 1'b1; #5;
+				int_osc = 1'b0; #5;
+				int_osc = 1'b1; #5;
 		end
         
     initial begin
@@ -48,19 +48,20 @@ module testbench_aes_spi();
       load = 1'b1;
       // set delay to true
       delay = 1;
+	  reset = 0; #20;
+	  reset = 1; 
     end
 
-    
 	assign comb = {plaintext, key};
     // shift in test vectors, wait until done, and shift out result
-    always @(posedge clk) begin
+    always @(posedge int_osc) begin
       if (i == 256) load = 1'b0;
       if (i<256) begin
         #1; sdi = comb[255-i];
         #1; sck = 1; #5; sck = 0;
         i = i + 1;
       end else if (done && delay) begin
-        #100; // Delay to make sure that the answer is held correctly on the cyphertext before shifting out
+        #99; // Delay to make sure that the answer is held correctly on the cyphertext before shifting out
         delay = 0;
       end else if (done && i < 384) begin
         #1; sck = 1; 
@@ -76,5 +77,4 @@ module testbench_aes_spi();
       
       end
     end
-    
 endmodule

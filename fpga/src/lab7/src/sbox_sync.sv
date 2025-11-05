@@ -1,13 +1,11 @@
-/////////////////////////////////////////////
-// sbox
-//   Infamous AES byte substitutions with magic numbers
-//   Synchronous version which is mapped to embedded block RAMs (EBR)
-//   Section 5.1.1, Figure 7
-/////////////////////////////////////////////
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds the logic for a synchronous sbox
+// 11/03/25
 module sbox_sync(
-	input		logic [7:0] a,
-	input	 	logic 			clk,
-	output 	logic [7:0] sbox);
+	input		logic [7:0] sboxin,
+	input	 	logic 			int_osc,
+	output 	logic [7:0] sboxout);
             
   // sbox implemented as a ROM
   // This module is synchronous and will be inferred using BRAMs (Block RAMs)
@@ -16,7 +14,7 @@ module sbox_sync(
   initial   $readmemh("sbox.txt", sbox);
 	
 	// Synchronous version
-	always_ff @(posedge clk) begin
-		y <= sbox[a];
+	always_ff @(posedge int_osc) begin
+		sboxout <= sbox[sboxin];
 	end
 endmodule

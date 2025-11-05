@@ -1,85 +1,154 @@
-module keyexpansion(input  logic int_osc, 
-                     input reset, 
-                     input load,
-                     input  logic [127:0] key,
-                     input  logic [3:0]   counter,
-                     output logic [127:0] nextkey,
-                     output logic complete);
-    
-logic [31:0] w [0:43];
-logic [31:0] rot, sub, rcon;
-logic [5:0] count;
-typedef enum logic [1:0] {idle, init, create, finish} statetype;
+// Drake Gonzales
+// drgonzales@g.hmc.edu
+// This Module holds the fsm for the keyexpansion module
+// 11/03/25
+
+module keyexpansion(input  logic int_osc,
+                    input  logic load,
+                    input logic add,
+                    input  logic [127:0] key,
+                    input logic [127:0] sreg,
+                    input  logic [3:0] counter,        
+                    output logic [127:0] nextkey,
+                    output logic complete);
+   
+logic [31:0] w [0:3];       
+logic [31:0] neww [0:3];    
+logic [31:0] subword, tempword;            
+logic [5:0] wordcount;            
+logic [3:0] currentround;          
+logic [1:0] bytecompute;            
+logic [7:0] sboxin, sboxout;
+
+typedef enum logic [3:0] {idle, init, waitload, sbox0, sbox1, sbox2, sbox3, capture, comp, waiter, finish} statetype;
 statetype state, nextstate;
 
-// Code block is used to solve for subword and rotword for keyexpansion psuedocode
-sbox sbox0(rot[31:24], sub[31:24]);
-sbox sbox1(rot[23:16], sub[23:16]);
-sbox sbox2(rot[15:8],  sub[15:8]);
-sbox sbox3(rot[7:0],   sub[7:0]);
+assign tempword = {w[3][23:0], w[3][31:24]};
 
-
-assign rot = {w[count-1][23:0], w[count-1][31:24]};
-
-rcon= '{32'h01000000, 32'h02000000, 32'h04000000, 32'h08000000, 32'h10000000, 
-32'h20000000, 32'h40000000, 32'h80000000, 32'h1b000000, 32'h36000000};
-    
-// Nextstate logic
-always_ff @(posedge int_osc, negedge reset)
-    if (reset == 0) begin
-        state <= idle;
-        count <= 0;
-    end 
-    else state <= nextstate;
-    
-// Nextstate logic
 always_comb begin
-    case(state)
-        idle: 
-            if (load)
-                nextstate = init;
-            else nextstate = idle;
-        init: 
-            nextstate = create;
-        create:  
-            if (count > 43)
-                nextstate = finish;
-            else nextstate = create;
-        finish: 
-            nextstate = idle;
-
-        default: nextstate = state;
+    case(bytecompute)
+        2'd0: sboxin <= tempword[31:24];
+        2'd1: sboxin <= tempword[23:16];  
+        2'd2: sboxin <= tempword[15:8];    
+        2'd3: sboxin <= tempword[7:0];  
+        default: sboxin <= 8'h00;
     endcase
- end
-
- // Pos edge of the clock solve for w   
-always_ff @(posedge int_osc, negedge reset) begin
-    if (reset == 0) begin
-        count <= 0;
-    end
-    else begin
-    case(state)
-        idle: if (load) count <= 0;
-        init: begin
-            {w[3], w[2], w[1], w[0]} <= key;
-            count <= 4;
-        end
-        create: begin
-            if (count % 4 == 0) // nk = 4 used 4 to use less memory
-                w[count] <= w[count-4] ^ sub ^ rcon[count/4]; 
-            else
-                w[count] <= w[count-4] ^ w[count-1]; 
-            count <= count + 1;
-        end
-       endcase
-    end
 end
 
-// set output signal complete
-always_comb begin 
-    complete = (state == finish);
-end 
-    
-assign nextkey = {w[counter*4+3], w[counter*4+2], w[counter*4+1], w[counter*4]};
+sbox_sync sbox_func(sboxin, int_osc, sboxout);
+
+localparam logic [31:0] rcon [0:9] = '{32'h01000000, 32'h02000000, 32'h04000000, 32'h08000000, 32'h10000000,
+32'h20000000, 32'h40000000, 32'h80000000, 32'h1b000000, 32'h36000000};
+
+// nextstate logic
+always_ff @(posedge int_osc) begin
+    if (load == 1)
+        state <= idle;
+    else
+        state <= nextstate;
+end
+
+// follow pesudocode given, send through sbox after compute state
+always_comb begin
+nextstate <= state;
+case(state)
+    idle:
+        if (load || add)
+            nextstate <= init;          
+    init: begin
+        if (counter == 4'd0)
+            nextstate <= finish;  
+        else
+            nextstate <= waitload;  
+    end
+    waitload: nextstate  <= sbox0;
+    sbox0: nextstate <= sbox1;
+    sbox1: nextstate <= sbox2;
+    sbox2: nextstate <= sbox3;
+    sbox3: nextstate <= capture;
+    capture: nextstate <= waiter;
+    waiter: nextstate <= comp;
+    comp: begin  
+        if (wordcount >= 8) begin
+            nextstate <= finish;
+        end
+        else begin
+            nextstate <= comp;
+        end
+    end
+    finish:  nextstate <= idle;    
+    default: nextstate <= idle;
+endcase
+end
+
+always_ff @(posedge int_osc) begin
+if (load == 1) begin
+    wordcount <= 0;
+    currentround <= 0;
+    bytecompute <= 0;
+    w[0] <= 32'h0;
+    w[1] <= 32'h0;
+    w[2] <= 32'h0;
+    w[3] <= 32'h0;
+    neww[0] <= 32'h0;
+    neww[1] <= 32'h0;
+    neww[2] <= 32'h0;
+    neww[3] <= 32'h0;
+    subword <= 32'h0;
+end
+else begin
+    case(state)
+    idle: begin
+    if (load || add) begin
+        wordcount <= 0;
+        currentround <= counter;
+        end
+    end   
+    init: begin
+    if (counter == 4'd0) begin
+        {neww[0], neww[1], neww[2], neww[3]} <= key;
+        end
+    else begin
+        {w[0], w[1], w[2], w[3]} <= sreg;
+        wordcount <= 4;
+        bytecompute <= 0;
+        end
+end          
+waitload: bytecompute <= 0;
+    sbox0: begin
+            bytecompute <= 1;
+    end              
+        sbox1: begin
+        bytecompute <= 2;
+        subword[31:24] <= sboxout;
+    end            
+    sbox2: begin
+        bytecompute <= 3;
+        subword[23:16] <= sboxout;
+        end                 
+    sbox3: begin
+        bytecompute <= 0;
+        subword[15:8] <= sboxout;
+    end     
+        capture: begin
+        subword[7:0] <= sboxout;
+    end       
+    comp: begin
+        case(wordcount)
+            4: neww[0] <= w[0] ^ subword ^ rcon[currentround - 1];  
+            5: neww[1] <= w[1] ^ neww[0];  
+            6: neww[2] <= w[2] ^ neww[1];  
+            7: neww[3] <= w[3] ^ neww[2];  
+        endcase
+            wordcount <= wordcount + 1;
+    end 
+    finish: begin
+        wordcount <= 0;
+    end
+endcase
+end
+end
+assign nextkey = {neww[0], neww[1], neww[2], neww[3]};
+assign complete = (state == finish);
 
 endmodule
