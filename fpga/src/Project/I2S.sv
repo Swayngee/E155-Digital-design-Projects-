@@ -10,7 +10,7 @@ module lscc_i2s_codec #(
     input  logic                     enabler,      // transmitter/receiver enable
     input  logic                     din,          // I2S serial data input
     input  logic        [31 : 0]     i2din,        // audio data // Input from ADC
-    output logic        [31 : 0]     i2dout,       // audio data // Output to DAC
+    output logic        [31 : 0]     i2dout,       // audio data // Output to ADC
     output logic                     buffer,       // sample buffer read/write (pulse)
     output logic                     dout,         // I2S serial data output
     output logic                     bclk,         // I2S bit clock output
