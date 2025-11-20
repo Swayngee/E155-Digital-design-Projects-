@@ -143,7 +143,6 @@ module lscc_i2s_codec #(
 
     // expose lrclk
     assign lrclk = lrclkreg;
-
     // -----------------------------------------------------------------------------
     // Main FSM: receive (din) or transmit (dout)
     // -----------------------------------------------------------------------------
@@ -196,7 +195,6 @@ module lscc_i2s_codec #(
                 end
               end
             end
-
             WAIT_CLK: begin
               // Wait for first valid bclk edge before sampling/transmitting bits
               newword <= 1'b0;
@@ -207,7 +205,6 @@ module lscc_i2s_codec #(
                 sd_ctrl_r <= TRX_DATA;
               end
             end
-
             TRX_DATA: begin
               // if lrclk toggles in the middle of data, we consider new word
               if (lrclkposedge || lrclknegedge)
