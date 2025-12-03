@@ -166,16 +166,25 @@ assign mac_rst = reset && (state != WAIT1) && (state != WAIT2);
     end
     
     logic signed [31:0] mac_result_latched;
+
+    always_ff @(posedge clk) begin
+        if (!reset) begin
+            mac_result_latched <= 32'd0;
+        end else if (state == IDLE) begin 
+            mac_result_latched <= 32'd0;
+        end
+        else if (state == MULT_A2) begin
+            mac_result_latched <= mac_result;  
+        end
+    end
     
     // Output the result and assert output_valid when ready
     always_ff @(posedge clk) begin
         if (!reset) begin
             filtered_output <= 16'd0;
             output_ready <= 1'b0;
-            mac_result_latched <= 32'd0;
         end else if (state == DONE) begin  
             // Extract Q2.14 from Q4.28 with rounding
-            mac_result_latched <= mac_result;
             filtered_output <= mac_result_latched[29:14] + mac_result_latched[13];
             output_ready <= 1'b1;
         end else begin
