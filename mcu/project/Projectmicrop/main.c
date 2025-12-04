@@ -38,12 +38,15 @@ while(1){
     // -----------------------------
     // Coefficient Calculation
     // -----------------------------
-    ThreeBandCoeffs coeffs = calcCoeffUpdate(
+    /*ThreeBandCoeffs coeffs = calcCoeffUpdate(
         values[2],   // low band knob
         values[1],   // mid band knob
         values[3]    // high band knob
-    );
-    
+    ); */
+
+    //ThreeBandCoeffs coeffs = simpleTestFilters(0);
+    ThreeBandCoeffs coeffs = calcCoeffUpdate(values[2], values[1], values[3]);
+
     
     // -----------------------------
     // SPI OUTPUT
@@ -58,13 +61,13 @@ while(1){
         spiSendReceive(values[i] >> 8);    // MSB of ADC value
         spiSendReceive(values[i] & 0xFF);  // LSB of ADC value
     }
-    
+    /*
     // Send Low-pass filter coefficients (10 bytes)
     spiSendReceive(0x40); spiSendReceive(0x00);  // LOW_B0 = 0x4000
     spiSendReceive(0x00); spiSendReceive(0x30);  // LOW_B1 = 0x0000
     spiSendReceive(0x00); spiSendReceive(0x00);  // LOW_B2 = 0x0000
-    spiSendReceive(0x00); spiSendReceive(0x00);  // LOW_A1 = 0x0000
-    spiSendReceive(0x00); spiSendReceive(0x00);  // LOW_A2 = 0x0000
+    spiSendReceive(0x00); spiSendReceive(0x01);  // LOW_A1 = 0x0000
+    spiSendReceive(0x00); spiSendReceive(0x01);  // LOW_A2 = 0x0000
     
     // Send Mid-pass filter coefficients (10 bytes)
     spiSendReceive(0x20); spiSendReceive(0x00);  // MID_B0 = 0x4000
@@ -79,13 +82,15 @@ while(1){
     spiSendReceive(0x00); spiSendReceive(0x10);  // HIGH_B2 = 0x0000
     spiSendReceive(0x00); spiSendReceive(0x00);  // HIGH_A1 = 0x0000
     spiSendReceive(0xFF); spiSendReceive(0x00);  // HIGH_A2 = 0x0000
-    
+  */
 
     // helper macro
-    #define SEND_Q14(x)                 \
+#define SEND_Q14(x)          \
+    do {                     \
         spiSendReceive(((x) >> 8) & 0xFF); \
-        spiSendReceive((x) & 0xFF);
-    /*
+        spiSendReceive((x) & 0xFF);        \
+    } while(0)
+
     // ---- LOW BAND ----
     SEND_Q14(coeffs.low.b0);
     SEND_Q14(coeffs.low.b1);
@@ -106,10 +111,10 @@ while(1){
     SEND_Q14(coeffs.high.b2);
     SEND_Q14(coeffs.high.a1);
     SEND_Q14(coeffs.high.a2);
-    */
+    
 
     digitalWrite(PA11, 1);  // CS high
-    for(volatile int i = 0; i < 100000; i++);  
+    for(volatile int i = 0; i < 20000; i++);  
      
     print_q14("LOW_B0", coeffs.low.b0);
     print_q14("LOW_B1", coeffs.low.b1);

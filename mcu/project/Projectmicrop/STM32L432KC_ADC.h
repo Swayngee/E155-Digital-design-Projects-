@@ -11,7 +11,7 @@
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
-extern uint16_t values[5];
+extern uint16_t values[6];
 
 
 void configureADC(void);
