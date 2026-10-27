@@ -15,6 +15,9 @@ about:
     - icon: envelope
       text: Email
       href: mailto:drgonzales@g.hmc.edu
+    - icon: file-earmark-person
+      text: Resume
+      href: files/Drake_Gonzales_Resume.pdf
 ---
 
 Hi! I'm Drake Gonzales, a senior Engineering major at Harvey Mudd College. I am super interested in **RF engineering**: transmission lines, impedance matching, filter design, and the gap between what a simulation predicts and what the network analyzer actually measures. I also enjoy the digital side of electrical and computer engineering, from FPGA and microcontroller systems to CPU design.

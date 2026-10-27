@@ -1,5 +1,7 @@
 project:
   type: website
+  resources:
+    - files/
 
 website:
   title: "Drake Gonzales"
@@ -39,6 +41,8 @@ website:
         href: cpu/multicycle-cpu.qmd
       - text: Posters
         href: courses.qmd#project-posters
+      - text: Resume
+        href: files/Drake_Gonzales_Resume.pdf
     right:
       - icon: github
         href: https://github.com/Swayngee
