@@ -1,22 +1,27 @@
 ---
-title: "E155 portfolio"
+title: "Drake Gonzales"
+subtitle: "Engineering @ Harvey Mudd College · RF & Digital Design"
 image: images/headshot.jpg
-theme: solar
-about: 
+toc: false
+about:
   template: jolla
   links:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/drake-gonzales-a953092a6/
     - icon: github
-      text: Github
+      text: GitHub
       href: https://github.com/Swayngee
+    - icon: envelope
+      text: Email
+      href: mailto:drgonzales@g.hmc.edu
 ---
-Hello! My name is Drake Gonzales and I am a Junior Engineering major at Harvey Mudd College. I am interested in studying computer and electrical engineering, with a specific focus in Lithography. This website, created with Quarto, posseses all of my work that I have completed in E155 "Microprocessor System:Design & Application"
 
+Hi! I'm Drake Gonzales, a senior Engineering major at Harvey Mudd College. I am super interested in **RF engineering**: transmission lines, impedance matching, filter design, and the gap between what a simulation predicts and what the network analyzer actually measures. I also enjoy the digital side of electrical and computer engineering, from FPGA and microcontroller systems to CPU design.
 
+This site collects my work across several courses and projects. Head to [Courses](courses.qmd) to see:
 
-Date created: 8/27/2025
-
-
-
+- **[E155: Microprocessor Systems](courses.qmd#e155-microprocessor-systems)**: seven FPGA and microcontroller labs and a real-time 3-band audio equalizer
+- **[E157: RF Circuit Design](courses.qmd#e157-rf-circuit-design)**: transmission lines, VNA measurements, matching networks, and filter design
+- **[Multicycle RISC-V CPU](courses.qmd#multicycle-risc-v-cpu)**: a multicycle processor written in SystemVerilog
+- **[Project Posters](courses.qmd#project-posters)**: E80 and the ICRA wildfire poster

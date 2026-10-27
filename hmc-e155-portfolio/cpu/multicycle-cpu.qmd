@@ -1,0 +1,65 @@
+---
+title: "Multicycle RISC-V CPU"
+subtitle: "SystemVerilog processor design"
+date: "4/29/25"
+---
+
+## Overview
+
+This project implements a multicycle RISC-V processor in SystemVerilog. Each instruction runs over several clock cycles, sequenced by a centralized control FSM. This lets one ALU and one shared instruction/data memory be reused across the steps of every instruction. The design is split into a **controller** (FSM, ALU decoder, and instruction decoder) and a **datapath** (register file, ALU, immediate extender, and non-architectural registers). The two are connected in a top-level `RISCVmulti` module.
+
+The project was developed within a lab framework. I implemented and debugged all of the control sequencing, the datapath connections, and the instruction execution behavior.
+
+Source: [github.com/Swayngee/Multicycle-CPU](https://github.com/Swayngee/Multicycle-CPU)
+
+## Supported Instructions
+
+| Type | Instructions |
+|:--|:--|
+| R-type | `add`, `sub`, `and`, `or`, `slt` |
+| I-type | `addi`, `lw` |
+| S-type | `sw` |
+| B-type | `beq` |
+| J-type | `jal` |
+
+## Control FSM
+
+The main FSM in `fsm.sv` steps through the following states. Transitions out of Decode depend on the opcode.
+
+| State | Name | Action |
+|:--|:--|:--|
+| S0 | Fetch | Read the instruction from memory, write the IR, PC ← PC + 4 |
+| S1 | Decode | Read registers; compute PC + imm for a possible branch target |
+| S2 | MemAdr | ALUOut ← rs1 + imm (load/store address) |
+| S3 | MemRead | Read data memory at ALUOut |
+| S4 | MemWB | Write loaded data to rd |
+| S5 | MemWrite | Write rs2 to memory at ALUOut |
+| S6 | ExecuteR | ALU operation on rs1, rs2 |
+| S7 | ALUWB | Write ALU result to rd |
+| S8 | ExecuteI | ALU operation on rs1, imm |
+| S9 | JAL | PC ← PC + imm, save the return address |
+| S10 | BEQ | Compare rs1 and rs2, branch on the Zero flag |
+
+## Datapath Highlights
+
+- An **OldPC** register holds the address of the current instruction for branch and jump target calculation.
+- An **ALUOut** register carries ALU results between cycles.
+- A **single shared memory** holds instructions and data, selected by `AdrSrc`.
+- The branch decision uses the ALU **Zero** flag.
+
+## Module Breakdown
+
+| File | Purpose |
+|:--|:--|
+| `RISCVmulti.sv` | Top level connecting the controller and datapath |
+| `controller.sv` | Wraps the FSM, ALU decoder, and instruction decoder |
+| `fsm.sv` | Multicycle control state machine |
+| `ALUDecoder.sv`, `InstrDecoder.sv` | ALU control and immediate-format decoding |
+| `datapath.sv` | PC, IR, register file, ALU, and muxes |
+| `alu.sv`, `RegFile.sv`, `Extend.sv` | Core datapath blocks |
+| `MemUnit.sv` | Shared instruction/data memory |
+| `top_dg.sv` | System top connecting the CPU and memory |
+
+## Verification
+
+I simulated the CPU end to end and inspected the waveforms. I verified correct behavior for arithmetic, memory, and control-flow instructions.

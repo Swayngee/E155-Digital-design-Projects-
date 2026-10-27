@@ -5,7 +5,6 @@ date: "9/27/25"
 categories:
   - reflection
 draft: false
-theme: solar
 
 ---
 Initial reaction to Lab 1 of Microp? It was alot. The code itself wasnt that bad, but the software we used to program the FPGA was just horrible. It took around 10 minutes to load each time, and when you finally were able to load it, it would not recognize your FPGA was plugged in unless you crashed the site 100 times.

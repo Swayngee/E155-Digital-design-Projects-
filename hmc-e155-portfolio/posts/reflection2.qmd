@@ -1,7 +1,0 @@
----
-title: "Lab 2"
-date: "10/27/25"
-categories:
-  - reflection
-draft: false
----

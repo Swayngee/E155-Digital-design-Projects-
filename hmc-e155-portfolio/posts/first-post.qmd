@@ -5,7 +5,6 @@ date: "8/27/25"
 categories:
   - reflection
 draft: false
-theme: solar
 
 ---
 

@@ -2,45 +2,51 @@ project:
   type: website
 
 website:
-  title: "E155 portfolio"
+  title: "Drake Gonzales"
   navbar:
     left:
       - text: Home
         href: index.qmd
-      - text: Labs
+      - text: Courses
+        href: courses.qmd
+      - text: E155 Labs
         menu:
-          - text: Lab1
+          - text: "Lab 1: FPGA & MCU Familiarization"
             href: labs/lab1.qmd
-          - text: Lab2
+          - text: "Lab 2: Multiplexed 7-Segment Display"
             href: labs/lab2.qmd
-          - text: Lab3
+          - text: "Lab 3: Keypad Scanner"
             href: labs/lab3.qmd
-          - text: Lab4
+          - text: "Lab 4: Digital Audio"
             href: labs/lab4.qmd
-          - text: Lab5
+          - text: "Lab 5: Interrupts"
             href: labs/lab5.qmd
-          - text: Lab6
+          - text: "Lab 6: IoT & SPI"
             href: labs/lab6.qmd
-          - text: Lab7
+          - text: "Lab 7: AES"
             href: labs/lab7.qmd
-      - text: Project
+          - text: "Reflections"
+            href: blog.qmd
+      - text: RF Labs
         menu:
-          - text: Project Proposal
-            href: project/projectproposal.qmd
-          - text: Project Midpoint
-            href: project/project.qmd
-          - text: Project Final
-            href: project/Finalwriteup.qmd
-      - text: Resources
-        href: resources.qmd
-      
+          - text: "Lab 2: Transmission Lines & Reflections"
+            href: rf/lab2.qmd
+          - text: "Lab 3: VNA & L-Matching Networks"
+            href: rf/lab3.qmd
+          - text: "Design Project 1: Butterworth Low-Pass Filter"
+            href: rf/designproject1.qmd
+      - text: Multicycle CPU
+        href: cpu/multicycle-cpu.qmd
+      - text: Posters
+        href: courses.qmd#project-posters
+    right:
+      - icon: github
+        href: https://github.com/Swayngee
+      - icon: linkedin
+        href: https://www.linkedin.com/in/drake-gonzales-a953092a6/
+
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: solar
     css: styles.css
     toc: true
-
-
-

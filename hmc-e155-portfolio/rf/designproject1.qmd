@@ -1,0 +1,39 @@
+---
+title: "RF Design Project 1: Butterworth Low-Pass Filter"
+subtitle: "E157 RF Circuit Design"
+date: "10/21/26"
+---
+
+## Overview
+
+I designed, simulated, built, and measured a **5th-order Butterworth low-pass filter** with a 100 MHz passband edge. I chose a Butterworth for its maximally flat passband and its −20n dB/decade rolloff. I took the normalized component values (R~S~ = R~L~ = 1 Ω) from the standard Butterworth tables, then scaled them to the 100 MHz corner and the 50 Ω system impedance.
+
+## Results
+
+| Parameter | Analytical | Simulated (ideal) | Simulated (real parts) | Measured |
+|:--|:-:|:-:|:-:|:-:|
+| Filter type | Butterworth | — | — | — |
+| Filter order | 5 | — | — | — |
+| Passband edge (1 dB ripple) | 100 MHz | 99.6 MHz | 110.2 MHz | 104 MHz |
+| Stopband start (20 dB rejection) | 181.3 MHz | 180.6 MHz | 196.8 MHz | 197 MHz |
+| Insertion loss | 0 dB | 0.00 dB | 0.17 dB | 0.1 dB |
+| In-band ripple | 1 dB | 1.04 dB | 0.75 dB | 0.95 dB |
+
+## Designing Around Real Components
+
+The biggest discrepancy came from the parts available in the lab. My original design called for two 112 nH inductors, but the lab only stocked 120 nH and 80 nH. The board had a limited number of series pads, so only one of the two inductors could be built close to 112 nH. I went back to simulation and varied each L and C until I understood how each one shaped the response. That let me reach a design with real values that closely tracked the original.
+
+## Modeling Board Parasitics
+
+To bring the simulation closer to the measurements, I added board parasitics to the LTspice model:
+
+- **1.4 nH in series with each shunt capacitor**, for the ground via and pad. This weakens the shunt path at high frequency and reduces stopband rejection.
+- **0.2 pF to ground at each of the three filter nodes**, for solder-pad capacitance (and generous solder). This adds shunt capacitance and lowers the cutoff slightly.
+
+With these added, the simulated S~21~ magnitude and phase matched the measurements closely from 0 to 300 MHz. S~11~ was the hardest to match: its shape differed a lot from the ideal simulation, although its magnitude closely matched the measurement.
+
+## What I Learned
+
+Normalized values for almost every standard filter are already tabulated. The real work is choosing the passband, stopband, and order, and then dealing with the physical board. Pre-computed L and C values don't guarantee a working filter, because parasitics from vias, pads, and connectors all shift the response. Even a small drill hole in a PCB acts like an inductor.
+
+[Full design report with schematics, hand calculations, S-parameter plots, and Smith charts](https://drive.google.com/file/d/1G6pXYdiSLLlvGPR8YGFW2FR-DEqetvIa/view)

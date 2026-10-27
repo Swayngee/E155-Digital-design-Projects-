@@ -1,5 +1,4 @@
 ---
-theme: solar
 date: "9/22/25"
 categories:
   - labreport

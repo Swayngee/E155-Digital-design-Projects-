@@ -1,0 +1,39 @@
+---
+title: "RF Lab 3: Vector Network Analyzer and L-Matching Networks"
+subtitle: "E157 RF Circuit Design"
+date: "10/4/26"
+---
+
+## Overview
+
+This lab introduced the vector network analyzer (VNA) and the Smith chart. I then used both to design, build, and tune an L-matching network on a PCB. The work had three parts: predicting what the VNA should show for simple cable terminations, seeing how calibration changes those measurements, and matching a 270 Ω load to a 50 Ω system at 100 MHz.
+
+## VNA Theory and Calibration
+
+Over a 70–130 MHz sweep, I predicted and then measured the reflection (S~11~) of SMA cables with different terminations:
+
+- 1 m cable terminated in a short, an open, and a 50 Ω load
+- 10 m cable terminated in a short
+
+A matched 50 Ω load gives Γ = 0, a single point at the center of the Smith chart. Before calibration, the short and open don't land where theory says they should. The VNA is measuring the cable too, including its phase delay, inductance, and capacitance, so the reflection rotates around the Smith chart with frequency.
+
+Calibrating with short, open, and 50 Ω (SOL) standards moves the reference plane to the end of the cable. After calibration, the measurements match theory: the short sits at Γ = −1, the open at Γ = +1, and the 50 Ω load at the center of the chart.
+
+## L-Match Design: 50 Ω to 270 Ω at 100 MHz
+
+I designed the L-match with a series capacitor. For an L-match the quality factor is set by the impedance ratio:
+
+$$Q = \sqrt{\frac{R_{high}}{R_{low}} - 1} = \sqrt{\frac{270}{50} - 1} \approx 2.1$$
+
+The design used a **15 pF** capacitor and a **220 nH** inductor. I also used a series-to-parallel transformation to find the Q of a resonant network at its natural frequency ω~0~.
+
+## Build and Measurement
+
+Before placing parts, I characterized the board with zero-ohm resistors and the 270 Ω termination. Then I soldered and measured the network:
+
+1. **Original design:** 15 pF + 220 nH + 270 Ω termination
+2. **Tuned design:** 15 pF + (270 nH ∥ 470 nH = 171.5 nH) + 270 Ω termination
+
+Parasitic capacitance on the board meant the built network needed less inductance than calculated. After examining the measured S-parameter magnitude and phase, I swapped to the parallel inductor combination. The final measured **Q was 1.59**, compared with the designed 2.09.
+
+[Full lab report with Smith charts, VNA captures, and PCB photos](https://docs.google.com/document/d/1W_jZ2hziBq8SbEWpIt9bIS6KlD7Ekut5oyEk0IaTKAU/edit)

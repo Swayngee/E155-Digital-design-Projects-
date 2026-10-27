@@ -1,0 +1,50 @@
+---
+title: "Courses & Projects"
+---
+
+## E155: Microprocessor Systems
+
+*Microprocessor Systems: Design & Application* · Harvey Mudd College · Fall 2025
+
+A lab sequence on the iCE40 UltraPlus FPGA (SystemVerilog) and the STM32L432KC microcontroller (C). The labs cover combinational and sequential logic, FSMs, clock-domain crossing, timers, interrupts, SPI/UART, and FPGA–MCU co-design. Each lab took around 15 hours, including the write-up. Source code is on [GitHub](https://github.com/Swayngee/E155-Digital-design-Projects-).
+
+| Lab | Topic | Platform |
+|:--|:--|:--|
+| [Lab 1](labs/lab1.qmd) | FPGA & MCU familiarization, 7-segment display | FPGA |
+| [Lab 2](labs/lab2.qmd) | Time-multiplexed dual 7-segment display | FPGA |
+| [Lab 3](labs/lab3.qmd) | Keypad scanner FSM | FPGA |
+| [Lab 4](labs/lab4.qmd) | Digital audio with timers and PWM | MCU |
+| [Lab 5](labs/lab5.qmd) | Quadrature-encoder motor speed with interrupts | MCU |
+| [Lab 6](labs/lab6.qmd) | IoT temperature web server over SPI & UART | MCU |
+| [Lab 7](labs/lab7.qmd) | AES-128 encryption accelerator | FPGA + MCU |
+
+**Final project: real-time 3-band audio equalizer** (with Eoin O'Connell). IIR filters on the FPGA process I²S audio in real time, and the MCU computes filter coefficients from the knob inputs.
+[Final report](https://eoinoconnell04.github.io/E155-Portfolio/E155-Project/final_report.html) ·
+[Interactive frequency-response demo](https://eoinoconnell04.github.io/E155-Portfolio/E155-Project/bode_plot_demo.html) ·
+[Project repo](https://github.com/eoinoconnell04/E155-Project)
+
+Also see my [E155 reflections](blog.qmd) and the course references: [class website](https://hmc-e155.github.io/), [dev board BOM](https://hmc-e155.github.io/assets/doc/E155_v4_Dev_Board_BOM.html), [STM32L4 reference manual](https://hmc-e155.github.io/assets/doc/rm0394-stm32l41xxx42xxx43xxx44xxx45xxx46xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf), [iCE40 UltraPlus datasheet](https://hmc-e155.github.io/assets/doc/FPGA-DS-02008-2-0-iCE40-UltraPlus-Family-Data-Sheet.pdf).
+
+## E157: RF Circuit Design
+
+*RF Circuit Design* · Prof. Devon Donahue · Harvey Mudd College · Fall 2026
+
+Hands-on RF: transmission-line behavior, network-analyzer measurement, Smith charts, matching networks, and filter design. Every design is analyzed by hand, simulated in LTspice, then built and measured.
+
+| Lab | Topic |
+|:--|:--|
+| [Lab 2](rf/lab2.qmd) | Transmission lines, reflections, and standing waves |
+| [Lab 3](rf/lab3.qmd) | Vector network analyzer calibration and L-matching networks |
+| [Design Project 1](rf/designproject1.qmd) | 5th-order Butterworth low-pass filter at 100 MHz |
+
+## Multicycle RISC-V CPU
+
+A multicycle RISC-V processor in SystemVerilog, with separate controller and datapath modules and a centralized control FSM. It supports R-type, I-type, load/store, branch, and jump instructions.
+[Design write-up](cpu/multicycle-cpu.qmd) · [Source on GitHub](https://github.com/Swayngee/Multicycle-CPU)
+
+## Project Posters
+
+| Poster | PDF |
+|:--|:--|
+| E80 project poster | [View PDF](https://docs.google.com/presentation/d/1piagcSZ07ssevVEWhWaubfPGWsBWNrV_GH1aaXKMUAU/export/pdf) |
+| ICRA: Wildfire poster | [View PDF](https://docs.google.com/presentation/d/10cWJv77g5EdIza_5XpXlYu3lGI5Xki89YTCvYSdlEE0/export/pdf) |

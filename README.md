@@ -6,4 +6,4 @@ Read technical documentation for microcontrollers and other digital chips Write 
 
 The average lab time for this class was around 15 hour weekly commitment. This includes the full write-up and code implementation.
 
-Here is a website containing the necessary details for each lab including schematics, block diagrams, and calculations: https://swayngee.github.io/e155-lab1/
+The `hmc-e155-portfolio/` folder holds my Quarto portfolio site. It contains these E155 labs alongside my E157 RF Circuit Design labs, a multicycle RISC-V CPU, and project posters. To preview it locally, run `quarto preview hmc-e155-portfolio`. Published site: https://swayngee.github.io/e155-lab1/

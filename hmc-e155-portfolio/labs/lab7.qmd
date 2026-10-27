@@ -1,6 +1,5 @@
 ---
 date: "11/03/25"
-theme: solar
 categories:
   - labreport
 draft: false

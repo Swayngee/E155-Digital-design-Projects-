@@ -1,0 +1,40 @@
+---
+title: "RF Lab 2: Transmission Lines and Reflections"
+subtitle: "E157 RF Circuit Design"
+date: "9/18/26"
+---
+
+## Overview
+
+In this lab, a function generator drove a step and then a sinusoid onto a chain of BNC cables, with oscilloscope channels tapped along the line. The goal was to predict and measure how reflections from different terminations shape the waveform at each point on a transmission line. Every scenario was calculated by hand, simulated in LTspice, and compared against oscilloscope traces.
+
+## Electrical Length
+
+Electrical length describes how long a wave takes to travel through a cable or connector, rather than its physical length. To measure a connector's electrical length without knowing the cable's velocity factor, first measure the delay through a reference cable. Then insert the connector and send a fast edge down the line (time-domain reflectometry). The timing of the reflection from the connector's impedance discontinuity shows its extra delay.
+
+## Step Response for Different Terminations
+
+The generator's 50 Ω output impedance and the 50 Ω line form a divider, so a 0.5 V step launches down the line. Channel 2 sees it after 12 ft / (0.66c), and channel 3 after another 18 ft / (0.66c). The termination sets how much of the step reflects back, using Γ = (Z~L~ − Z~0~)/(Z~L~ + Z~0~):
+
+| Termination | Γ | Reflected step | Final line voltage |
+|:--|:-:|:-:|:-:|
+| Open | +1 | +0.5 V | 1.0 V |
+| 50 Ω (matched) | 0 | 0 V | 0.5 V |
+| Short | −1 | −0.5 V | 0 V |
+| 22 Ω | −28/72 ≈ −0.389 | −0.194 V | ≈ 0.31 V |
+| 200 Ω | +0.6 | +0.3 V | 0.8 V |
+
+I also analyzed a second setup with a shunt resistor partway down the line: 50 Ω shunt with 50 Ω and 200 Ω terminations, and a shorted shunt with an open termination.
+
+## Standing Waves
+
+With a 22 Ω termination driven by a sinusoid:
+
+- Γ = (22 − 50)/(22 + 50) = −0.389, so **VSWR = (1 + 0.389)/(1 − 0.389) ≈ 2.27**
+- The reflection is negative, so the voltage minimum sits at the load. To sweep channel 2 (48 ft from the load) through a full maximum-to-minimum cycle, start at f = v/(4·48 ft) ≈ **3.4 MHz** and end at f = v/(2·48 ft) ≈ **6.9 MHz**.
+
+## Simulation vs. Measurement
+
+Ideal LTspice simulations came close to the oscilloscope traces but did not match exactly. The 12 ft and 18 ft cables were measured exactly. However, the "short" BNC connecting channel 1 was really a 6-inch cable, which added about **770 ps** of delay at the start of the line. Adding that delay to the model brought the simulations in line with the measured traces for every termination case.
+
+[Full lab report with waveforms, hand sketches, and oscilloscope captures](https://docs.google.com/document/d/1Tq-NZlov_LlLASPi14jxe5vtr7tSGNo-1wMIvZKnPLU/edit)

@@ -1,12 +1,10 @@
 ---
-title: "E155 Blog posts"
-theme: solar
+title: "E155 Reflections"
 listing:
   contents: posts
   sort: "date asc"
   type: default
   categories: false
-
 ---
-Below are blog posts that consist of all my reflections within E155! I also included some class notes for clarity
- 
+
+Reflections I wrote during E155.
