@@ -28,11 +28,11 @@ There were no equations used for this lab.
 
 Below are the testbecnhes completed for the core, and SPI modules for this design. These modules acted like a 'top' module for our design and tested the two sections within our design. The core represented the code written for the AES implementation and the Spi was the communication protocol used between the FPGA and the MC. Below is the core testbench:
 
-![Figure 1: Testbench showing all states / inputs and outputs of each state from the core module](../images/corelab7.jpg)
+![Figure 1: Testbench showing all states / inputs and outputs of each state from the core module](../images/corelab7.png)
 
 Above portrays the Inputs and outputs from the fsm for the core module. 
 
-![Figure 2: Testbench showing the output from the core module](../images/coreresultlab7.jpg)
+![Figure 2: Testbench showing the output from the core module](../images/coreresultlab7.png)
 
 Above is the expected and the actual values coming out from our Core module. This verified that our AES implementation was correct. The testbench was condensed to this version to compare results only. 
 
