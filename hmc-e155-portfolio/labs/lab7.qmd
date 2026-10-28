@@ -56,33 +56,3 @@ Above is the testbench for the subbytes module.
 
 Above pictures the electrical circuit for our design. It portrays resistors, and all other electrical components used for the design. 
 
-
-## Results and Discussion
-
-**Logic Analyzer**
-
-For this lab, a website was created to be able to toggle an LED on and off, and control the resolution of a tempertaure sensor, the output of the seen can be seen below. 
-
-![Figure 4: Below is an example of the output from the website](../images/lab6wp.png)
-
-
-
-## Conclusion
-
-The design was a success. The microcontroller successfully was linked to the FPGA via SPI protocol, and the Advances Encryption Standard was implemented.  I correctly wrote systemverilog to create the AES, and completed testbenches to test my design. The result was also correctly recorded on an logic analyzer. 
-
-This Lab took 45 hours. 
-
-## Suggestions
-
-To better manage time when completing such a hard module. I spent a whole lot of time just writing the code at first, but I shouldve gone through each module, tested it, then gone to the next to ensure proper flow. Then in the top module just ensure/fix the timing results. 
-
-## Ai Prototype 
-
-This AI prototype was used with Claude, a code based AI. The first prompt can be seen below: 
-
-Write SystemVerilog HDL to implement the KeyExpansion logic described in the FIPS-197 uploaded document. The module should be purely combinational, using the previous key and current round number to calculate the next key. Assume other required modules (SubWord and RotWord) are already implemented.
-
-The output from the prompt:  
-
-

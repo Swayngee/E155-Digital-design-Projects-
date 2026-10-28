@@ -27,4 +27,4 @@ This site collects my work across several courses and projects. Head to [Courses
 - **[E155: Microprocessor Systems](courses.qmd#e155-microprocessor-systems)**: seven FPGA and microcontroller labs and a real-time 3-band audio equalizer
 - **[E157: RF Circuit Design](courses.qmd#e157-rf-circuit-design)**: transmission lines, VNA measurements, matching networks, and filter design
 - **[Multicycle RISC-V CPU](courses.qmd#multicycle-risc-v-cpu)**: a multicycle processor written in SystemVerilog
-- **[Project Posters](courses.qmd#project-posters)**: E80 and the ICRA wildfire poster
+- **[Project Posters](courses.qmd#project-posters)**: E80 and the autonomous drone poster
