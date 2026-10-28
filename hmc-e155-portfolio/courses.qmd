@@ -46,5 +46,5 @@ A multicycle RISC-V processor in SystemVerilog, with separate controller and dat
 
 | Poster | PDF |
 |:--|:--|
-| E80 project poster | [View PDF](https://docs.google.com/presentation/d/1piagcSZ07ssevVEWhWaubfPGWsBWNrV_GH1aaXKMUAU/export/pdf) |
-| Autonomous drone poster | [View PDF](https://docs.google.com/presentation/d/10cWJv77g5EdIza_5XpXlYu3lGI5Xki89YTCvYSdlEE0/export/pdf) |
+| E80 project poster | [View PDF](files/E80_AUV_Poster.pdf) |
+| Autonomous drone poster | [View PDF](files/ICRA_Wildfire_Autonomous_Drone_Poster.pdf) |
