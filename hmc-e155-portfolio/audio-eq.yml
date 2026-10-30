@@ -1,0 +1,8 @@
+- title: "Real-Time 3-Band Audio Equalizer"
+  subtitle: "iCE40 UltraPlus FPGA + STM32L432KC · with Eoin O'Connell"
+  description: "Three cascaded biquad IIR filters running on an FPGA at a 63 kHz sample rate, with each stage time-multiplexing a single hardened MAC16 DSP slice across its five coefficient terms."
+  image: images/flow_chart.png
+  path: "https://eoinoconnell04.github.io/E155-Portfolio/E155-Project/final_report.html"
+  date: "12/4/25"
+  weight: 1
+  categories: [FPGA, DSP, SystemVerilog, Audio]

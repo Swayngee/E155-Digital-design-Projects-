@@ -4,7 +4,7 @@ toc: false
 listing:
   - id: featured
     contents:
-      - projects/audio-eq.qmd
+      - audio-eq.yml
       - projects/pipelined-cpu.qmd
       - rf/designproject1.qmd
       - projects/aes-accelerator.qmd
