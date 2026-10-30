@@ -1,0 +1,35 @@
+---
+title: "Projects"
+toc: false
+listing:
+  - id: all-projects
+    contents:
+      - projects/audio-eq.qmd
+      - projects/pipelined-cpu.qmd
+      - rf/designproject1.qmd
+      - projects/aes-accelerator.qmd
+      - rf/lmatch.qmd
+      - projects/wildfire-drone.qmd
+      - cpu/multicycle-cpu.qmd
+      - projects/auv.qmd
+      - rf/transmission-lines.qmd
+    type: grid
+    grid-columns: 3
+    sort: "weight"
+    fields: [image, title, description, categories]
+    image-height: "200px"
+    categories: false
+    filter-ui: false
+    sort-ui: false
+---
+
+Hardware across RF circuit design, FPGA and RISC-V processor design, and
+robotics. Each writeup covers what I was trying to build, the decision that
+turned out to matter, and what the measurement actually said.
+
+::: {#all-projects}
+:::
+
+---
+
+Course lab reports are kept in the [coursework archive](courses.qmd).

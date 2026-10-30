@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="660" height="300" font-family="Helvetica, Arial, sans-serif">
+  <rect width="660" height="300" fill="#ffffff"/>
+  <text x="330" y="34" fill="#1f2328" font-size="17" font-weight="bold" text-anchor="middle">5-Stage Pipelined RISC-V</text>
+  <defs>
+    <marker id="fw" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#a16207"/>
+    </marker>
+  </defs>
+
+  <!-- stages -->
+  <g font-size="13" text-anchor="middle">
+    <rect x="28"  y="120" width="104" height="54" rx="6" fill="#f6f8fa" stroke="#0f766e" stroke-width="2"/>
+    <text x="80"  y="146" fill="#0f766e" font-weight="bold">Fetch</text>
+    <text x="80"  y="164" fill="#6b7280" font-size="11">PC / IMEM</text>
+
+    <rect x="152" y="120" width="104" height="54" rx="6" fill="#f6f8fa" stroke="#0f766e" stroke-width="2"/>
+    <text x="204" y="146" fill="#0f766e" font-weight="bold">Decode</text>
+    <text x="204" y="164" fill="#6b7280" font-size="11">RegFile / Ext</text>
+
+    <rect x="276" y="120" width="104" height="54" rx="6" fill="#f6f8fa" stroke="#0f766e" stroke-width="2"/>
+    <text x="328" y="146" fill="#0f766e" font-weight="bold">Execute</text>
+    <text x="328" y="164" fill="#6b7280" font-size="11">ALU / branch</text>
+
+    <rect x="400" y="120" width="104" height="54" rx="6" fill="#f6f8fa" stroke="#0f766e" stroke-width="2"/>
+    <text x="452" y="146" fill="#0f766e" font-weight="bold">Memory</text>
+    <text x="452" y="164" fill="#6b7280" font-size="11">DMEM</text>
+
+    <rect x="524" y="120" width="104" height="54" rx="6" fill="#f6f8fa" stroke="#0f766e" stroke-width="2"/>
+    <text x="576" y="146" fill="#0f766e" font-weight="bold">Writeback</text>
+    <text x="576" y="164" fill="#6b7280" font-size="11">result mux</text>
+  </g>
+
+  <!-- stage links -->
+  <g stroke="#9aa4ae" stroke-width="2">
+    <line x1="132" y1="147" x2="150" y2="147"/>
+    <line x1="256" y1="147" x2="274" y2="147"/>
+    <line x1="380" y1="147" x2="398" y2="147"/>
+    <line x1="504" y1="147" x2="522" y2="147"/>
+  </g>
+
+  <!-- forwarding paths -->
+  <path d="M452,118 C452,86 350,86 330,116" fill="none" stroke="#a16207" stroke-width="2" marker-end="url(#fw)"/>
+  <path d="M576,118 C576,66 346,60 330,114" fill="none" stroke="#a16207" stroke-width="2" marker-end="url(#fw)"/>
+  <text x="430" y="78" fill="#a16207" font-size="11" text-anchor="middle">forwarding</text>
+
+  <!-- hazard unit -->
+  <rect x="190" y="222" width="280" height="44" rx="6" fill="#f6f8fa" stroke="#c2410c" stroke-width="2"/>
+  <text x="330" y="242" fill="#c2410c" font-size="13" font-weight="bold" text-anchor="middle">Hazard Unit</text>
+  <text x="330" y="258" fill="#6b7280" font-size="11" text-anchor="middle">ForwardAE/BE · load-use stall · branch flush</text>
+  <line x1="204" y1="220" x2="204" y2="176" stroke="#c2410c" stroke-width="2"/>
+  <line x1="328" y1="220" x2="328" y2="176" stroke="#c2410c" stroke-width="2"/>
+  <line x1="452" y1="220" x2="452" y2="176" stroke="#c2410c" stroke-width="2"/>
+</svg>

@@ -1,0 +1,50 @@
+---
+title: "Autonomous Underwater Vehicle"
+subtitle: "E80: Experimental Engineering · four-person team"
+description: "A five-sensor water-quality AUV, deployed off a kayak to two meters depth, built to measure the conditions that drive algae blooms."
+image: ../images/poster-auv.jpg
+weight: 8
+categories: [Robotics, Sensors, Analog, Field Testing]
+---
+
+A four-person team project (with Sorin Jayaweera, Cooper Nixon, and Evan Siegel)
+building an autonomous underwater vehicle to measure water quality.
+
+Algae blooms block sunlight from the plants beneath them and drive down
+dissolved oxygen, and whether one forms depends on temperature, pH, salinity,
+and available light. The AUV carries sensors for all of those — **pH, turbidity,
+temperature, salinity, and pressure** — so the conditions can be sampled at
+varying distance from shore and depth instead of only at the surface.
+
+## Analog Front End
+
+Each sensor's raw output occupies a small part of its range in the conditions we
+actually expected at the field station, so each one got an op-amp stage sized to
+expand that window and recover sensitivity. Calibration compared the amplified
+output against a known standard and fit a first-order linear regression per
+sensor.
+
+## Deployment
+
+Three tests in open water, dropped from the side of a kayak to roughly **2 m
+depth**, plus data from two piers. Before deployment we verified buoyancy,
+tested the motors, and took baseline data on both piers.
+
+## Results
+
+Ground-truth checks were honest about accuracy: in air, the vehicle read about
+**14 °C against an actual 13.9 °C**, and pressure was checked against 101.3 kPa.
+
+- **Salinity** behaved as expected — nearly constant ppm, perturbed only by noise.
+- **Turbidity** did not. Rather than rising near shore, the steady-state response
+  showed level curves with turbidity *higher* closer to the pier.
+- **Temperature** read warmer further from shore, which was backwards from
+  expectation; rain that day may have set up a temperature inversion layer.
+- **pH** produced nothing usable. The sensor was non-operable.
+
+The honest summary is that two of five channels disagreed with expectation and a
+third failed outright. Re-running with a working pH sensor, at regular intervals
+further from shore and deeper, pausing long enough at each station for every
+sensor to actually reach steady state, is the obvious next pass.
+
+[Full poster (PDF)](../files/E80_AUV_Poster.pdf)

@@ -1,12 +1,23 @@
 ---
-title: "RF Design Project 1: Butterworth Low-Pass Filter"
-subtitle: "E157 RF Circuit Design"
+title: "5th-Order Butterworth Low-Pass Filter"
+subtitle: "E157 RF Circuit Design · designed, built, and measured at 100 MHz"
+description: "A 100 MHz Butterworth LPF taken from normalized tables through LTspice to a soldered 50 Ω board — then back to simulation to model the via and pad parasitics that moved the measured response."
 date: "10/21/26"
+image: ../images/rf/lpf-board.jpg
+weight: 3
+categories: [RF, Filters, LTspice, VNA]
 ---
 
-## Overview
+![The assembled filter on a 50 Ω board. Five reactive elements between two SMA connectors — and the generous solder on those pads turned out to matter.](../images/rf/lpf-board.jpg)
 
-I designed, simulated, built, and measured a **5th-order Butterworth low-pass filter** with a 100 MHz passband edge. I chose a Butterworth for its maximally flat passband and its −20n dB/decade rolloff. I took the normalized component values (R~S~ = R~L~ = 1 Ω) from the standard Butterworth tables, then scaled them to the 100 MHz corner and the 50 Ω system impedance.
+I designed, simulated, built, and measured a 5th-order Butterworth low-pass
+filter with a 100 MHz passband edge. Butterworth for the maximally flat
+passband; 5th order for −20·*n* dB/decade of rolloff. Normalized component
+values (R~S~ = R~L~ = 1 Ω) come straight from the standard tables, scaled to the
+100 MHz corner and the 50 Ω system impedance.
+
+The design work was not choosing the component values. It was getting a board to
+behave like the values.
 
 ## Results
 
@@ -19,21 +30,86 @@ I designed, simulated, built, and measured a **5th-order Butterworth low-pass fi
 | Insertion loss | 0 dB | 0.00 dB | 0.17 dB | 0.1 dB |
 | In-band ripple | 1 dB | 1.04 dB | 0.75 dB | 0.95 dB |
 
-## Designing Around Real Components
+## Design
 
-The biggest discrepancy came from the parts available in the lab. My original design called for two 112 nH inductors, but the lab only stocked 120 nH and 80 nH. The board had a limited number of series pads, so only one of the two inductors could be built close to 112 nH. I went back to simulation and varied each L and C until I understood how each one shaped the response. That let me reach a design with real values that closely tracked the original.
+Normalized values for nearly every standard filter are already tabulated. You
+pick the row matching your order, then denormalize to your corner frequency and
+system impedance.
 
-## Modeling Board Parasitics
+![Butterworth low-pass table, normalized to R~S~ = R~L~ = 1 Ω](../images/rf/lpf-butterworth-table.png)
 
-To bring the simulation closer to the measurements, I added board parasitics to the LTspice model:
+![Denormalizing the table values to 100 MHz and 50 Ω](../images/rf/lpf-denormalization.png)
 
-- **1.4 nH in series with each shunt capacitor**, for the ground via and pad. This weakens the shunt path at high frequency and reduces stopband rejection.
-- **0.2 pF to ground at each of the three filter nodes**, for solder-pad capacitance (and generous solder). This adds shunt capacitance and lowers the cutoff slightly.
+![Hand calculations for the filter](../images/rf/lpf-hand-calcs.jpg)
 
-With these added, the simulated S~21~ magnitude and phase matched the measurements closely from 0 to 300 MHz. S~11~ was the hardest to match: its shape differed a lot from the ideal simulation, although its magnitude closely matched the measurement.
+![Schematic with ideal components](../images/rf/lpf-schematic-ideal.png)
 
-## What I Learned
+## Designing Around the Parts That Existed
 
-Normalized values for almost every standard filter are already tabulated. The real work is choosing the passband, stopband, and order, and then dealing with the physical board. Pre-computed L and C values don't guarantee a working filter, because parasitics from vias, pads, and connectors all shift the response. Even a small drill hole in a PCB acts like an inductor.
+I designed the filter before walking into the lab, assuming the inductors I
+needed would be on the shelf. They weren't. The design called for two **112 nH**
+inductors; the lab stocked **120 nH and 80 nH**.
+
+Series-combining to reach 112 nH was the obvious move, but the board had a
+limited number of series pads — enough to build *one* inductor near 112 nH,
+leaving the other stuck at 120 nH or 80 nH.
+
+So I went back to LTspice and swept each L and C individually until I understood
+which part controlled which feature of the response. That turned a dead end into
+a design problem with a solution: a set of real, in-stock values whose response
+tracks the original closely.
+
+![Schematic with real component values](../images/rf/lpf-schematic-real.png)
+
+## Measured vs. Simulated
+
+![|S₂₁| from DC to the stopband, all four designs](../images/rf/lpf-s21-wideband.png)
+
+![|S₂₁| across the passband](../images/rf/lpf-s21-passband.png)
+
+![Phase of S₂₁ across the passband](../images/rf/lpf-s21-phase-passband.png)
+
+![|S₁₁| from DC to the stopband](../images/rf/lpf-s11-wideband.png)
+
+![Smith charts, 0–300 MHz: S₁₁ (left) and S₂₁ (right) for the ideal simulation, the parasitic-corrected simulation, and the measurement](../images/rf/lpf-smith-grid.png)
+
+## Modeling the Board
+
+The measurements deviated enough from the ideal simulation that the board itself
+had to go into the model. Two additions:
+
+- **1.4 nH in series with each shunt capacitor**, representing the inductance of
+  its ground via and pad. This weakens the shunt path at high frequency and
+  reduces stopband rejection — visible as the drop from −24 dB to about −21 dB
+  at 200 MHz.
+- **0.2 pF to ground at each of the three filter nodes**, representing solder-pad
+  capacitance. (A generous amount of solder was used.) This adds shunt
+  capacitance and pulls the cutoff down slightly.
+
+![Schematic with board parasitics added](../images/rf/lpf-parasitics-schematic.png)
+
+With those in, simulated S₂₁ magnitude and phase tracked the measurement closely
+from DC to 300 MHz.
+
+![S₁₁, 0–300 MHz, with parasitics modeled](../images/rf/lpf-parasitics-s11.png)
+
+![S₂₁, 0–300 MHz, with parasitics modeled](../images/rf/lpf-parasitics-s21.png)
+
+**S₁₁ was the one that resisted.** Its shape differs substantially from the
+ideal simulation even after the parasitics are added, although its magnitude
+matches the measurement well. Reflection is more sensitive to the details of the
+board than transmission is, and the lumped parasitic model only goes so far.
+
+![Power delivered to a 50 Ω load, driven by a 1 V~pp~ 50 MHz source, using the measured insertion loss](../images/rf/lpf-power-calc.png)
+
+## What I Took Away
+
+The L and C values are a solved problem. Choosing the passband, the stopband,
+and the order is the real design decision, and everything after that is the
+board: vias, pads, connectors, and solder all shift the response. Pre-computed
+values don't guarantee a working filter. As discussed in class, even a small
+drill hole in a PCB acts like an inductor — the hole interferes with the
+magnetic field of the charge, which is a strange and pleasing thing to have to
+account for.
 
 [Full design report with schematics, hand calculations, S-parameter plots, and Smith charts](https://drive.google.com/file/d/1G6pXYdiSLLlvGPR8YGFW2FR-DEqetvIa/view)

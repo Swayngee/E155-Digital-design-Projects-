@@ -1,0 +1,55 @@
+---
+title: "Wildfire Detection Drone"
+subtitle: "MADD Lab · with Prof. Adyasha Mohanty · Jan 2025 – Jan 2026"
+description: "Autonomous UAV research combining a thermal module and a depth camera with onboard deep-learning inference, aimed at detecting wildfires early rather than mapping them after the fact."
+image: ../images/poster-drone.jpg
+date: "1/15/26"
+weight: 6
+categories: [Robotics, Research, Sensor Fusion, ML]
+---
+
+Research in the Machine Learning and Autonomy for Diverse Domains (MADD) Lab on
+detecting wildfires from autonomous UAVs, presented as a poster.
+
+Existing wildfire monitoring leans on satellite thermal imagery, ground sensors,
+and observation towers. These produce good data for understanding how a fire
+*behaved*, but they tend to confirm fires rather than catch them — detection
+often arrives after ignition. The proposal here is a low-cost drone carrying
+both thermal and visual sensors, running detection onboard, so the latency
+between "something is burning" and "someone knows" collapses.
+
+## Platform
+
+| Component | Role | Cost |
+|:--|:--|--:|
+| Holybro drone, Pixhawk 6C flight controller, GPS, telemetry radio | Airframe and flight control | ~$735 |
+| NVIDIA Jetson Orin Nano (1024 CUDA cores) | Onboard inference | ~$250 |
+| Intel RealSense depth camera (RGB + IR, 1280×800 @ 30 fps) | Visual detection | ~$314 |
+| FLIR Lepton 3.5 (−10 °C to 110 °C) | Thermal imaging | ~$199 |
+
+Keeping the whole sensor package under roughly $1,500 is the point, not a
+footnote — the end goal is a *swarm*, and a swarm only makes sense if one node
+is cheap enough to lose.
+
+## Results So Far
+
+The thermal and RGB computer-vision pipelines run a **YOLOv8** model, reaching
+**up to 70% fire-detection accuracy**. Flight testing produced detections from
+both modalities. On a frame from the
+RealSense camera, a pre-trained object detector returned **twenty correct
+detections against five misses**. Thermal capture from **300 feet above Foothill
+Blvd** cleanly separated the warm road surface from the cooler trees around it,
+which is the contrast a fire-detection model needs to key on.
+
+## Contributions
+
+- Designed an in-house drone system with low-cost thermal and visual sensors.
+- Extended single-drone perception toward a swarm architecture.
+- Deployed deep-learning fire-detection models on the Jetson Orin Nano for
+  online inference.
+
+Continued work scales to two or more drones, with the additional aircraft
+carrying a Raspberry Pi and a different sensor mix to broaden the data collected
+from a single fire.
+
+[Full poster (PDF)](../files/ICRA_Wildfire_Autonomous_Drone_Poster.pdf)

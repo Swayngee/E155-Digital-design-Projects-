@@ -1,7 +1,11 @@
 ---
 title: "Multicycle RISC-V CPU"
 subtitle: "SystemVerilog processor design"
+description: "A multicycle RISC-V processor with a centralized control FSM, built so one ALU and one shared memory are reused across every step of every instruction."
 date: "4/29/25"
+weight: 7
+image: ../images/cpu-architecture.svg
+categories: [SystemVerilog, Computer Architecture, RISC-V]
 ---
 
 ## Overview

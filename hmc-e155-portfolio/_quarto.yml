@@ -6,41 +6,13 @@ project:
 website:
   title: "Drake Gonzales"
   navbar:
+    background: "#ffffff"
+    foreground: "#1f2328"
     left:
       - text: Home
         href: index.qmd
-      - text: Courses
-        href: courses.qmd
-      - text: E155 Labs
-        menu:
-          - text: "Lab 1: FPGA & MCU Familiarization"
-            href: labs/lab1.qmd
-          - text: "Lab 2: Multiplexed 7-Segment Display"
-            href: labs/lab2.qmd
-          - text: "Lab 3: Keypad Scanner"
-            href: labs/lab3.qmd
-          - text: "Lab 4: Digital Audio"
-            href: labs/lab4.qmd
-          - text: "Lab 5: Interrupts"
-            href: labs/lab5.qmd
-          - text: "Lab 6: IoT & SPI"
-            href: labs/lab6.qmd
-          - text: "Lab 7: AES"
-            href: labs/lab7.qmd
-          - text: "Reflections"
-            href: blog.qmd
-      - text: RF Labs
-        menu:
-          - text: "Lab 2: Transmission Lines & Reflections"
-            href: rf/lab2.qmd
-          - text: "Lab 3: VNA & L-Matching Networks"
-            href: rf/lab3.qmd
-          - text: "Design Project 1: Butterworth Low-Pass Filter"
-            href: rf/designproject1.qmd
-      - text: Multicycle CPU
-        href: cpu/multicycle-cpu.qmd
-      - text: Posters
-        href: courses.qmd#project-posters
+      - text: Projects
+        href: projects.qmd
       - text: Resume
         href: files/Drake_Gonzales_Resume.pdf
     right:
@@ -51,6 +23,6 @@ website:
 
 format:
   html:
-    theme: solar
+    theme: cosmo
     css: styles.css
     toc: true

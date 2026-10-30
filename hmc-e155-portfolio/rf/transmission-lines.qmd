@@ -1,0 +1,75 @@
+---
+title: "Transmission Lines and Reflections"
+subtitle: "E157 RF Circuit Design"
+description: "Predicting, simulating, and measuring reflections on a 30 ft cable chain — and chasing a 770 ps discrepancy back to a 6-inch BNC."
+date: "9/18/26"
+weight: 20
+categories: [RF, Transmission Lines, LTspice]
+aliases:
+  - /rf/lab2.html
+---
+
+A function generator drives a step, then a sinusoid, onto a chain of BNC cables
+with oscilloscope channels tapped along the line. The goal is to predict and
+measure how reflections from different terminations shape the waveform at each
+tap. Every scenario was calculated by hand, simulated in LTspice, and compared
+against the traces.
+
+## Electrical Length
+
+Electrical length describes how long a wave takes to travel through a cable or
+connector, rather than how long the thing physically is. To measure a
+connector's electrical length without knowing the cable's velocity factor, first
+measure the delay through a reference cable. Then insert the connector and send
+a fast edge down the line — time-domain reflectometry. The connector is an
+impedance discontinuity, so it reflects, and the timing of that reflection gives
+you its added delay.
+
+## Step Response for Different Terminations
+
+The generator's 50 Ω output impedance and the 50 Ω line form a divider, so a 1 V
+source launches a 0.5 V step. Channel 1 sees it almost immediately. Channel 2
+sees it after 12 ft / 0.66c, and channel 3 after a further 18 ft / 0.66c. What
+differs between cases is how much comes back, via
+Γ = (Z~L~ − Z~0~)/(Z~L~ + Z~0~):
+
+| Termination | Γ | Reflected step | Final line voltage |
+|:--|:-:|:-:|:-:|
+| Open | +1 | +0.5 V | 1.0 V |
+| 50 Ω (matched) | 0 | 0 V | 0.5 V |
+| Short | −1 | −0.5 V | 0 V |
+| 22 Ω | −28/72 ≈ −0.389 | −0.194 V | ≈ 0.31 V |
+| 200 Ω | +0.6 | +0.3 V | 0.8 V |
+
+The matched case is the one worth staring at: nothing moves past the initial
+0.5 V, because there is no reflection to add to it.
+
+I also worked a second configuration with a shunt resistor partway down the
+line — 50 Ω shunt into both 50 Ω and 200 Ω terminations, and a shorted shunt
+into an open termination.
+
+## Standing Waves
+
+With a 22 Ω termination driven by a sinusoid:
+
+- Γ = (22 − 50)/(22 + 50) = −0.389, so **VSWR = (1 + 0.389)/(1 − 0.389) ≈ 2.27**
+- The reflection is negative, so the voltage *minimum* sits at the load, and it
+  stays there as frequency approaches zero. To sweep channel 2 (48 ft from the
+  load) through a full maximum-to-minimum cycle, start at
+  f = v/(4 · 48 ft) ≈ **3.4 MHz** and end at f = v/(2 · 48 ft) ≈ **6.9 MHz**,
+  with v = 0.66c ≈ 1 ft / 1.5 ns.
+
+## Where the Simulation Was Wrong
+
+Ideal LTspice runs came close to the measured traces but didn't match. The 12 ft
+and 18 ft cables were measured and correct in the model. The error was at the
+very start of the line: the "short BNC" feeding channel 1 wasn't short, it was
+an actual cable. We used the shortest one in the lab — 6 inches — which still
+added about **770 ps** of delay.
+
+Putting that 770 ps into the model brought simulation and measurement into
+agreement across every termination case. The lesson is cheap to state and easy
+to forget: at these timescales, the thing you called a wire is a transmission
+line.
+
+[Full lab report with waveforms, hand sketches, and oscilloscope captures](https://docs.google.com/document/d/1Tq-NZlov_LlLASPi14jxe5vtr7tSGNo-1wMIvZKnPLU/edit)

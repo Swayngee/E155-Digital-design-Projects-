@@ -1,30 +1,129 @@
 ---
-title: "Drake Gonzales"
-subtitle: "Engineering @ Harvey Mudd College · RF & Digital Design"
-image: images/headshot.jpg
+pagetitle: "Drake Gonzales"
 toc: false
-about:
-  template: jolla
-  links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/drake-gonzales-a953092a6/
-    - icon: github
-      text: GitHub
-      href: https://github.com/Swayngee
-    - icon: envelope
-      text: Email
-      href: mailto:drgonzales@g.hmc.edu
-    - icon: file-earmark-person
-      text: Resume
-      href: files/Drake_Gonzales_Resume.pdf
+listing:
+  - id: featured
+    contents:
+      - projects/audio-eq.qmd
+      - projects/pipelined-cpu.qmd
+      - rf/designproject1.qmd
+      - projects/aes-accelerator.qmd
+      - rf/lmatch.qmd
+      - projects/wildfire-drone.qmd
+      - cpu/multicycle-cpu.qmd
+      - projects/auv.qmd
+    type: grid
+    grid-columns: 3
+    sort: "weight"
+    fields: [image, title, description, categories]
+    image-height: "200px"
+    categories: false
+    filter-ui: false
+    sort-ui: false
 ---
 
-Hi! I'm Drake Gonzales, a senior Engineering major at Harvey Mudd College. I am super interested in **RF engineering**: transmission lines, impedance matching, filter design, and the gap between what a simulation predicts and what the network analyzer actually measures. I also enjoy the digital side of electrical and computer engineering, from FPGA and microcontroller systems to CPU design.
+::: {.grid .hero}
+::: {.g-col-12 .g-col-md-8}
+# Drake Gonzales {.hero-name}
 
-This site collects my work across several courses and projects. Head to [Courses](courses.qmd) to see:
+### RF & Digital Design Engineer {.hero-title}
 
-- **[E155: Microprocessor Systems](courses.qmd#e155-microprocessor-systems)**: seven FPGA and microcontroller labs and a real-time 3-band audio equalizer
-- **[E157: RF Circuit Design](courses.qmd#e157-rf-circuit-design)**: transmission lines, VNA measurements, matching networks, and filter design
-- **[Multicycle RISC-V CPU](courses.qmd#multicycle-risc-v-cpu)**: a multicycle processor written in SystemVerilog
-- **[Project Posters](courses.qmd#project-posters)**: E80 and the autonomous drone poster
+I'm a senior Engineering major at Harvey Mudd College, emphasizing electrical,
+RF, and computer engineering. I work on the part of hardware where the math
+stops being tidy — impedance matching and filter design on the RF side, FPGA
+and RISC-V processor design on the digital side, and the gap between what a
+simulation predicts and what the network analyzer actually shows you.
+
+[GitHub](https://github.com/Swayngee) ·
+[LinkedIn](https://www.linkedin.com/in/drake-gonzales-a953092a6/) ·
+[Email](mailto:drgonzales@g.hmc.edu) ·
+[Resume](files/Drake_Gonzales_Resume.pdf)
+:::
+
+::: {.g-col-12 .g-col-md-4}
+![](images/headshot.jpg){style="width:100%;height:300px;object-fit:cover;object-position:center 22%;border-radius:8px;"}
+:::
+:::
+
+## Experience
+
+::: {.xp}
+::: {.xp-logo}
+![](images/logos/hrl.png){fig-alt="HRL Laboratories"}
+:::
+::: {.xp-body}
+[Quantum Instrumentation Control Kit (QICK)]{.xp-role}
+[HRL Laboratories / IBM · Clinic Program]{.xp-org}
+
+Replacing the QICK tProcessor with a standardized **RISC-V-based quantum-control
+architecture** for real-time control of superconducting and spin qubit
+experiments, targeting a **Xilinx UltraScale+ RFSoC**. Working directly with HRL
+and Fermilab engineers to keep the design compatible with the existing QICK and
+spinQICK APIs while supporting precise timing, waveform generation, and
+pulse-level control.
+:::
+::: {.xp-date}
+Aug 2026 — Present
+:::
+:::
+
+::: {.xp}
+::: {.xp-logo}
+![](images/logos/aerospace.png){fig-alt="The Aerospace Corporation"}
+:::
+::: {.xp-body}
+[GPS IV]{.xp-role}
+[The Aerospace Corporation / FAA · Clinic Program]{.xp-org}
+
+Modeled future **Laser Inter-Satellite Link (LISL)** architectures for GPS IV
+using SOAP, analyzing orbital geometry, link availability, pointing
+requirements, and relative satellite motion to identify viable configurations.
+Presented the orbital-geometry and system-level trade-off findings to engineers
+at Aerospace's Concurrent Design Center. *(ITAR)*
+:::
+::: {.xp-date}
+Jan 2026 — May 2026
+:::
+:::
+
+::: {.xp}
+::: {.xp-logo}
+![](images/logos/roncelli.png){fig-alt="Roncelli Technologies"}
+:::
+::: {.xp-body}
+[Student Intern]{.xp-role}
+[Roncelli Technologies]{.xp-org}
+
+AI-driven automation, PLC and CNC programming, robotic automation, and process
+optimization. Worked with the SMDT team analyzing ERP, Industrial IoT, and
+production flows.
+:::
+::: {.xp-date}
+Summer 2026
+:::
+:::
+
+::: {.xp}
+::: {.xp-logo}
+![](images/logos/hmc.png){fig-alt="Harvey Mudd College"}
+:::
+::: {.xp-body}
+[Autonomous Drone Research]{.xp-role}
+[Harvey Mudd College · MADD Lab]{.xp-org}
+
+Designed a **multi-UAV wildfire inspection system** on embedded platforms, and
+built the thermal and RGB computer-vision pipelines around a YOLOv8 model,
+reaching **up to 70% fire-detection accuracy**.
+[Read the project →](projects/wildfire-drone.qmd)
+:::
+::: {.xp-date}
+Jan 2025 — Jan 2026
+:::
+:::
+
+## Projects
+
+::: {#featured}
+:::
+
+[See all projects →](projects.qmd)

@@ -1,0 +1,87 @@
+---
+title: "Pipelined RISC-V Processor"
+subtitle: "5-stage RV32 core, synthesized on Sky130 and scored on CoreMark"
+description: "A 5-stage pipelined RISC-V core with a forwarding unit, load-use hazard interlock, and a static BTFNT branch predictor — taken through synthesis and benchmarked at 4.5× the baseline CoreMark score."
+date: "4/6/26"
+image: ../images/cpu-pipeline.svg
+weight: 2
+categories: [SystemVerilog, Computer Architecture, RISC-V, Synthesis]
+---
+
+A RISC-V processor built from the ISA specification up, pipelined into five
+stages, then pushed through synthesis on a **Sky130 130 nm** process and scored
+on **CoreMark**. Unlike a classroom processor that only has to simulate
+correctly, this one is graded on a figure of merit combining cycle count,
+critical-path length, and silicon area — so every architectural decision has to
+pay for the hardware it costs.
+
+| Metric | Baseline | This design |
+|:--|--:|--:|
+| CoreMark score | 507 | **2,298** |
+| Clock period (critical path) | — | **4.17 ns** |
+| Improvement | — | **4.5×** |
+
+## Pipeline
+
+The core splits into the classic five stages, each in its own module:
+
+| Stage | File | Work |
+|:--|:--|:--|
+| Fetch | `fetch.sv` | PC update, instruction memory read |
+| Decode | `decode.sv` | Register read, immediate extension, control decode |
+| Execute | `execute.sv` | ALU operation, branch resolution |
+| Memory | `mem.sv` | Data memory access |
+| Writeback | `writeback.sv` | Result select and register write |
+
+Supporting those are an `alu`, a `regfile`, a `controller`, a `csr_unit` for
+control and status registers, and a `hazard` unit — plus the usual small
+building blocks (`adder`, `cmp`, `extend`, `flopr`, `mux2`).
+
+## Hazards
+
+Pipelining is only free until two instructions in flight need the same
+register. Three mechanisms handle that:
+
+**Forwarding.** The hazard unit drives two-bit `ForwardAE` / `ForwardBE`
+selects, routing a result straight from the Memory or Writeback stage back into
+Execute instead of waiting for it to land in the register file. Most
+back-to-back dependencies then cost nothing.
+
+**Load-use interlock.** Forwarding can't rescue a load, because the data isn't
+back from memory yet when the next instruction needs it. That case is detected
+explicitly:
+
+```systemverilog
+assign lwStall = (((Rs1D == RdE) || (Rs2D == RdE)) &&
+                  ((ResultSrcE == 2'b01) || (ResultSrcE == 2'b10)));
+assign StallF  = lwStall;
+assign StallD  = lwStall;
+assign FlushE  = lwStall | PCSrcE;
+```
+
+Fetch and Decode stall for one cycle while Execute is flushed to a bubble.
+
+**Branch flush.** A taken branch resolves in Execute, by which point the wrong
+instruction is already in Decode, so `PCSrcE` flushes it.
+
+## Branch Prediction
+
+A static **BTFNT** (backward-taken, forward-not-taken) predictor exploits the
+fact that backward branches are usually loop edges and therefore usually taken,
+while forward branches are usually the exit condition and usually aren't. It
+costs essentially no area — just a check of the immediate's sign bit — which
+matters when area is in the denominator of the score.
+
+## Why the Scoring Changes the Design
+
+The figure of merit is roughly
+
+$$\text{score} \propto \frac{1}{(\text{cycles} \times \text{critical path})^3 \cdot \text{area}}$$
+
+Cycle count and critical path are cubed; area is not. That weighting pushes hard
+toward *speed* and makes a deep combinational path expensive in a way that pure
+simulation never reveals. Reducing cycles by adding logic is only worth it while
+that logic stays off the critical path — which is exactly the trade that
+forwarding (cheap, on the path) and BTFNT (nearly free, off the path) are
+resolving.
+

@@ -1,1 +1,87 @@
-/* css styles */
+/* ---- Hero ---- */
+.hero { align-items: start; margin-bottom: 0.5rem; }
+h1.hero-name { margin-bottom: 0.1rem; font-weight: 700; }
+h3.hero-title {
+  font-weight: 400;
+  color: #0f766e;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border: none;
+}
+
+/* ---- Experience rows ---- */
+.xp {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+.xp:last-of-type { border-bottom: none; }
+
+.xp-logo {
+  flex: 0 0 116px;
+  width: 116px;
+  height: 60px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #e3e6ea;
+}
+.xp-logo p {
+  margin: 0;
+  line-height: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.xp-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.xp-body { flex: 1 1 auto; min-width: 0; }
+.xp-body p { margin-bottom: 0.4rem; }
+
+.xp-role {
+  display: block;
+  font-weight: 600;
+  font-size: 1.06rem;
+  line-height: 1.3;
+  color: #1f2328;
+}
+.xp-org {
+  display: block;
+  color: #6b7280;
+  font-size: 0.92rem;
+  margin-bottom: 0.45rem;
+}
+.xp-date, .xp-date p { margin: 0; }
+.xp-date {
+  flex: 0 0 auto;
+  color: #6b7280;
+  font-size: 0.86rem;
+  white-space: nowrap;
+  padding-top: 0.15rem;
+}
+
+@media (max-width: 767px) {
+  .xp { flex-wrap: wrap; gap: 0.75rem; }
+  .xp-body { flex: 1 1 100%; order: 3; }
+  .xp-date { order: 2; margin-left: auto; }
+}
+
+/* ---- Listing cards ---- */
+.quarto-grid-item .card-img-top,
+.quarto-grid-item img.thumbnail-image {
+  object-fit: cover;
+  background-color: #f8f9fa;
+}
