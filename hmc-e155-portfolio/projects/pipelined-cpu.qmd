@@ -15,6 +15,8 @@ correctly, this one is graded on a figure of merit combining cycle count,
 critical-path length, and silicon area — so every architectural decision has to
 pay for the hardware it costs.
 
+Source: [github.com/Swayngee/cvw](https://github.com/Swayngee/cvw/tree/main/examples/exercises/lynn)
+
 | Metric | Baseline | This design |
 |:--|--:|--:|
 | CoreMark score | 507 | **2,298** |
