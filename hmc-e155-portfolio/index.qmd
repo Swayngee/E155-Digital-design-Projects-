@@ -121,6 +121,8 @@ Jan 2025 — Jan 2026
 :::
 :::
 
+Here is a [link](courses.qmd) for all project lab reports
+
 ## Projects
 
 ::: {#featured}
